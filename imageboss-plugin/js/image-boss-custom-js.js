@@ -73,18 +73,16 @@ function add_imageboss_url() {
                 ib_option = '';
             }
             elm.attr('src', `${service_url}/height/${ib_height}/${ib_option}${src}`);
-        } else {
+        } else if (elm.attr('imageboss-operation') == 'cdn' || window.AUTO_IMAGEBOSS_CDN != '') {
             var ib_option;
 
             if (elm.attr('imageboss-options') != '' && typeof elm.attr('imageboss-options') !== 'undefined') {
                 ib_option = elm.attr('imageboss-options') + '/';
-            }else{
+            } else {
 
                 ib_option = '';
             }
             elm.attr('src', `${service_url}/cdn/${ib_option}${src}`);
         }
-
-
     });
 }

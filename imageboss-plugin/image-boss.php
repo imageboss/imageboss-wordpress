@@ -27,6 +27,7 @@ function my_plugin_redirect()
 
 function imageboss_js()
 {
+    wp_add_inline_script('mytheme-typekit', 'try{Typekit.load({ async: true });}catch(e){}');
     wp_enqueue_script('image-boss', plugins_url('/js/image-boss-js.js', __FILE__));
     wp_enqueue_style('image-boss', plugins_url('/css/admin_style.css', __FILE__));
 }
@@ -37,6 +38,7 @@ function custom_admin_js()
 {
     $url = plugins_url('/js/image-boss-custom-js.js', __FILE__);
     echo '<script type="text/javascript" src="' . $url . '"></script>';
+    echo '<script type="text/javascript">window.AUTO_IMAGEBOSS_CDN = "' . get_option('auto_imageboss_cdn') . '";</script>';
 }
 add_action('admin_footer', 'custom_admin_js');
 
@@ -72,12 +74,8 @@ function register_menu_page()
 
 add_action('admin_init', 'register_mysettings');
 
-function register_mysettings()
-{
-    //register our settings
-    //register_setting( 'imageboss-settings-group', 'cdn_option' );
-    register_setting('imageboss-settings-group', 'cdn_theme_layout');
-    register_setting('imageboss-settings-group', 'cdn_inside_post');
+function register_mysettings() {
+    register_setting('imageboss-settings-group', 'auto_imageboss_cdn');
 }
 
 function image_boss_main_page()
@@ -102,10 +100,8 @@ function image_boss_main_page()
 </div>
 <?php }
 
-function image_boss_settings()
-{
-
-    ?>
+function image_boss_settings() {
+?>
 
 <?php
 if ($_GET['action'] == 'image-boss-welcome-screen') {
@@ -119,16 +115,8 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
     <?php settings_fields('imageboss-settings-group');?>
     <?php do_settings_sections('imageboss-settings-group');?>
     <table class="form-table">
-
         <tr valign="top"  style="display: none;">
-        <td><input type="checkbox" id="cdn_theme_layout" name="cdn_theme_layout" value="yes" <?php if ($_POST['cdn_theme_layout'] == 'yes') {
-            echo 'checked';
-        }
-        ?>/></td>
-        </tr>
-
-        <tr valign="top"  style="display: none;">
-        <td><input type="checkbox" id="cdn_inside_post" name="cdn_inside_post" value="yes" <?php if ($_POST['cdn_inside_post'] == 'yes') {
+        <td><input type="checkbox" id="auto_imageboss_cdn" name="auto_imageboss_cdn" value="yes" <?php if ($_POST['auto_imageboss_cdn'] == 'yes') {
             echo 'checked';
         }
         ?>/></td>
@@ -145,7 +133,7 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
 <?php } ?>
 <?php
 } else {
-  if ((get_option('cdn_theme_layout') == '') && (get_option('cdn_inside_post') == '')) {
+  if (get_option('auto_imageboss_cdn') == '') {
 ?>
   <form method="post" action="<?php echo admin_url('admin.php?page=image-boss-setting&action=image-boss-welcome-screen') ?>" id="image_boss_settings">
 <?php } else { ?>
@@ -162,18 +150,9 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
 <?php do_settings_sections('imageboss-settings-group');?>
   <table class="form-table">
     <tr valign="top">
-    <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN to theme / layout images</th>
-      <td>
-        <input type="checkbox" id="cdn_theme_layout" name="cdn_theme_layout" value="yes" <?php if (get_option('cdn_theme_layout') != '') {
-          echo 'checked';
-        } ?> />
-      </td>
-    </tr>
-
-    <tr valign="top">
-    <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN for images inside posts</th>
+    <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN for all my images</th>
     <td>
-      <input type="checkbox" id="cdn_inside_post" name="cdn_inside_post" value="yes" <?php if (get_option('cdn_inside_post') != '') {
+      <input type="checkbox" id="auto_imageboss_cdn" name="auto_imageboss_cdn" value="yes" <?php if (get_option('auto_imageboss_cdn') != '') {
         echo 'checked';
       }
       ?> />
@@ -296,54 +275,45 @@ function imageboss_custom_html_template($html, $id, $caption, $title, $align, $u
     $hwstring = image_hwstring($width, $height);
 
     $image_boss = wp_get_attachment_image_src($id, 'full');
-    if (get_option('cdn_inside_post') != '') {
-        if ($url) {
-            $out .= '<a href="' . $url . '" class="fancybox">';
-        }
 
+    if ($url) {
+        $out .= '<a href="' . $url . '" class="fancybox">';
+    }
+
+    $field_operation = get_post_meta($id, 'imageboss-operation', true);
+
+    if ($field_operation == 'cover') {
+        $field_width = get_post_meta($id, 'imageboss-width', true);
+        $field_height = get_post_meta($id, 'imageboss-height', true);
+        $field_cover_mode = get_post_meta($id, 'imageboss-cover-mode', true);
+        $field_options = get_post_meta($id, 'imageboss-options', true);
+        $abd = 'cover-mode="' . $field_cover_mode . '"';
+
+        $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" ' . $abd . ' imageboss-width="' . $field_width . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_options . '"/>';
+
+    } elseif ($field_operation == 'width') {
+
+        $field_width = get_post_meta($id, 'imageboss-width', true);
+        $field_options = get_post_meta($id, 'imageboss-options', true);
+        $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-width="' . $field_width . '" imageboss-options="' . $field_options . '"/>';
+
+    } elseif ($field_operation == 'height') {
+        $field_options = get_post_meta($id, 'imageboss-options', true);
+        $field_height = get_post_meta($id, 'imageboss-height', true);
+        $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_options . '"/>';
+    } elseif ($field_operation == 'cdn') {
+        $field_options = get_post_meta($id, 'imageboss-options', true);
         $field_operation = get_post_meta($id, 'imageboss-operation', true);
 
-        if ($field_operation == 'cover') {
-            $field_width = get_post_meta($id, 'imageboss-width', true);
-            $field_height = get_post_meta($id, 'imageboss-height', true);
-            $field_cover_mode = get_post_meta($id, 'imageboss-cover-mode', true);
-            $field_options = get_post_meta($id, 'imageboss-options', true);
-            $abd = 'cover-mode="' . $field_cover_mode . '"';
-
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" ' . $abd . ' imageboss-width="' . $field_width . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_options . '"/>';
-
-        } elseif ($field_operation == 'width') {
-
-            $field_width = get_post_meta($id, 'imageboss-width', true);
-            $field_options = get_post_meta($id, 'imageboss-options', true);
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-width="' . $field_width . '" imageboss-options="' . $field_options . '"/>';
-
-        } elseif ($field_operation == 'height') {
-            $field_options = get_post_meta($id, 'imageboss-options', true);
-            $field_height = get_post_meta($id, 'imageboss-height', true);
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_options . '"/>';
-        } elseif ($field_operation == 'cdn') {
-            $field_options = get_post_meta($id, 'imageboss-options', true);
-            $field_operation = get_post_meta($id, 'imageboss-operation', true);
-
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-options="' . $field_options . '" />';
-        } else {
-            $field_options = get_post_meta($id, 'imageboss-options', true);
-            $field_operation = get_post_meta($id, 'imageboss-operation', true);
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-options="' . $field_options . '" />';
-        }
-
-        if ($url) {
-            $out .= '</a>';
-        }
+        $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-options="' . $field_options . '" />';
     } else {
-        if ($url) {
-            $out .= '<a href="' . $url . '" class="fancybox">';
-        }
-        $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" ' . $hwstring . '/>';
-        if ($url) {
-            $out .= '</a>';
-        }
+        $field_options = get_post_meta($id, 'imageboss-options', true);
+        $field_operation = get_post_meta($id, 'imageboss-operation', true);
+        $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-options="' . $field_options . '" />';
+    }
+
+    if ($url) {
+        $out .= '</a>';
     }
 
     return $out; // the result HTML
@@ -359,27 +329,6 @@ function override_mce_options($initArray)
     return $initArray;
 }
 add_filter('tiny_mce_before_init', 'override_mce_options');
-
-add_action('wp_footer', 'my_front_end_function');
-function my_front_end_function()
-{
-    if (get_option('cdn_theme_layout') != '') {
-        ?>
-            <script type="text/javascript">
-            jQuery('body').find('img').each(function() {
-                    var imgsrc = jQuery(this).attr('src');
-                    var findUrls ="https://img.imageboss.me/";
-                    var replaceurls = imgsrc.match(findUrls);
-
-                    if(replaceurls === null) {
-                        // jQuery(this).attr('src', "https://img.imageboss.me/cdn/" + jQuery(this).attr('src'));
-                    }
-
-            });
-            </script>
-        <?php
-}
-}
 
 function reset_attribute_of_images()
 {
@@ -409,7 +358,7 @@ function reset_attribute_of_images()
 }
 add_action('media_buttons', 'reset_attribute_of_images');
 
-function foresight_hires_img_replace($the_content)
+function apply_imageboss_images($the_content)
 {
     error_reporting(0);
     $service_url = "https://img.imageboss.me";
@@ -494,7 +443,7 @@ function foresight_hires_img_replace($the_content)
 
             $img->setAttribute('src', $my_src);
 
-        } else {
+        } else if (get_option('auto_imageboss_cdn') != '') {
             $ib_option2 = $img->getAttribute('imageboss-options');
             if ($ib_option2 != '') {
                 $ib_option_new2 = $ib_option2 . "/";
@@ -511,12 +460,19 @@ function foresight_hires_img_replace($the_content)
     return $post->saveHTML();
 }
 
-add_filter('the_content', 'foresight_hires_img_replace');
 
-// wrapps the featured image
-add_filter('wp_get_attachment_image_attributes', function ($attr) {
-    $service_url = "https://img.imageboss.me";
+// wraps the entire blog html output
+function callback($buffer) {
+    return apply_imageboss_images($buffer);
+}
 
-    $attr['src'] = $service_url . '/cdn/' . $attr['src'];
-    return $attr;
-});
+function buffer_start() {
+    ob_start("callback");
+}
+
+function buffer_end() {
+    ob_end_flush();
+}
+
+add_action('wp_head', 'buffer_start');
+add_action('wp_footer', 'buffer_end');
