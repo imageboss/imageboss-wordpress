@@ -2,7 +2,7 @@
 /*
 Plugin Name: ImageBoss
 Description: Content aware image resizing, cropping, compression, cache and CDN. All web development best practices, hassle free in one simple and powerful API.
-Version: 1.0.2
+Version: 1.0.3
 Author: ImageBoss
 Author URI: https://imageboss.me
 License: MIT
@@ -10,17 +10,17 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 register_activation_hook(__FILE__, 'ib_plugin_activate');
-add_action('admin_init', 'my_plugin_redirect');
+add_action('admin_init', 'ib_plugin_redirect');
 
 function ib_plugin_activate()
 {
-    add_option('my_plugin_do_activation_redirect', true);
+    add_option('ib_plugin_redirect', true);
 }
 
-function my_plugin_redirect()
+function ib_plugin_redirect()
 {
-    if (get_option('my_plugin_do_activation_redirect', false)) {
-        delete_option('my_plugin_do_activation_redirect');
+    if (get_option('ib_plugin_redirect', false)) {
+        delete_option('ib_plugin_redirect');
         if (!isset($_GET['activate-multi'])) {
             wp_redirect("admin.php?page=image-boss-setting");
         }

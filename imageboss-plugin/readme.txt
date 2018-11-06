@@ -3,7 +3,7 @@ Contributors: igorescobar
 Tags: cdn, images, compression, face detection, progressive scans, watermarking
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -22,7 +22,6 @@ Content aware image resizing, cropping, compression, cache and CDN. All web deve
 * Image CDN.
 * Image Filters.
 * Watermarking.
-
 
 == Installation ==
 
