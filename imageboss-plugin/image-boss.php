@@ -3,8 +3,8 @@
 Plugin Name: ImageBoss
 Description: On-demand image processing. Like an absolute boss.
 Version: 1.0.0
-Author: ImageBoss
-Author URI: http://imageboss.me/
+Author: C8L
+Author URI: http://www.cre8ivelabs.com/
 */
 
 
@@ -18,7 +18,8 @@ function ib_plugin_activate() {
 function my_plugin_redirect() {
     if (get_option('my_plugin_do_activation_redirect', false)) {
         delete_option('my_plugin_do_activation_redirect');
-        if (!isset($_GET['activate-multi'])) {
+        if(!isset($_GET['activate-multi']))
+        {
             wp_redirect("admin.php?page=image-boss-setting");
         }
     }
@@ -39,7 +40,7 @@ add_action('admin_footer', 'custom_admin_js');
 
 add_action( 'admin_menu', 'register_menu_page' );
 
-function register_menu_page() {
+function register_menu_page(){
   add_menu_page(
     'Dashboard',
     'ImageBoss',
@@ -49,29 +50,28 @@ function register_menu_page() {
   );
 
   add_submenu_page(
-    'image-boss',
-    'Settings',
-    'Settings',
-    'manage_options',
-    'image-boss-setting',
-    'image_boss_settings'
-  );
-
+      'image-boss',
+      'Settings',
+      'Settings',
+      'manage_options',
+      'image-boss-setting',
+      'image_boss_settings'
+    );
   add_submenu_page(
-    '',
-    'Welcome to ImageBoss',
-    'Settings',
-    'manage_options',
-    'image-boss-welcome-screen',
-    'image_boss_welcome_screen'
-  );
+      '',
+      'Welcome to ImageBoss',
+      'Settings',
+      'manage_options',
+      'image-boss-welcome-screen',
+      'image_boss_welcome_screen'
+    );
 }
 
 add_action( 'admin_init', 'register_mysettings' );
 
 function register_mysettings() {
-    // register our settings
-    // register_setting( 'imageboss-settings-group', 'cdn_option' );
+    //register our settings
+    //register_setting( 'imageboss-settings-group', 'cdn_option' );
     register_setting( 'imageboss-settings-group', 'cdn_theme_layout' );
     register_setting( 'imageboss-settings-group', 'cdn_inside_post' );
 }
@@ -97,7 +97,7 @@ function image_boss_main_page() {
 </div>
 <?php }
 
-function image_boss_settings() {
+function image_boss_settings(){
 
 ?>
 
@@ -134,8 +134,7 @@ if ( isset( $_GET['settings-updated'] ) ) {
 </script>
 <?php
 }
-
-} else {
+}else{
 if((get_option('cdn_theme_layout') == '') && (get_option('cdn_inside_post') == '')){ ?>
   <form method="post" action="<?php echo admin_url('admin.php?page=image-boss-setting&action=image-boss-welcome-screen')?>" id="image_boss_settings">
 <?php }else{ ?>
@@ -232,8 +231,8 @@ function imageboss_add_media_custom_field( $form_fields, $post ) {
         'input'  => 'text',
         'value' => ''
     );
-    $imageboss_opt = get_post_meta( $post->ID, 'imageboss-options', true );
-    $form_fields['imageboss-options'] = array(
+    $imageboss_opt = get_post_meta( $post->ID, 'imageboss-opt', true );
+    $form_fields['imageboss-opt'] = array(
         'label' => __( 'IB Operation' ),
         'input'  => 'hidden',
         'value' => ''
@@ -256,8 +255,8 @@ function imageboss_save_attachment_field($post, $attachment) {
     if( isset($attachment['imageboss-width']) ){
             update_post_meta($post['ID'], 'imageboss-width', $attachment['imageboss-width']);
     }
-    if( isset($attachment['imageboss-options']) ){
-            update_post_meta($post['ID'], 'imageboss-options', $attachment['imageboss-options']);
+    if( isset($attachment['imageboss-opt']) ){
+            update_post_meta($post['ID'], 'imageboss-opt', $attachment['imageboss-opt']);
     }
     if( isset($attachment['imageboss-cover-mode']) ){
             update_post_meta($post['ID'], 'imageboss-cover-mode', $attachment['imageboss-cover-mode']);
@@ -285,7 +284,7 @@ function imageboss_custom_html_template($html, $id, $caption, $title, $align, $u
             $out .= '<a href="' . $url . '" class="fancybox">';
       }
 
-        $field_opt = get_post_meta( $id, 'imageboss-options', true );
+        $field_opt = get_post_meta( $id, 'imageboss-opt', true );
 
         if($field_opt == 'cover'){
           $field_width = get_post_meta( $id, 'imageboss-width', true );
@@ -294,30 +293,30 @@ function imageboss_custom_html_template($html, $id, $caption, $title, $align, $u
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
           $abd = 'cover-mode="'.$field_cover_mode.'"';
 
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" '.$abd.' imageboss-width="'.$field_width.'" imageboss-height="'.$field_height.'" imageboss-optionss="'.$field_filter.'"/>';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" '.$abd.' imageboss-width="'.$field_width.'" imageboss-height="'.$field_height.'" imageboss-option="'.$field_filter.'"/>';
 
         }elseif($field_opt == 'width'){
 
           $field_width = get_post_meta( $id, 'imageboss-width', true );
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-width="'.$field_width.'" imageboss-optionss="'.$field_filter.'"/>';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-width="'.$field_width.'" imageboss-option="'.$field_filter.'"/>';
 
 
         }
         elseif($field_opt == 'height'){
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
           $field_height = get_post_meta( $id, 'imageboss-height', true );
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-height="'.$field_height.'" imageboss-optionss="'.$field_filter.'"/>';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-height="'.$field_height.'" imageboss-option="'.$field_filter.'"/>';
         }
         elseif($field_opt == 'cdn'){
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
-          $field_opt = get_post_meta( $id, 'imageboss-options', true );
+          $field_opt = get_post_meta( $id, 'imageboss-opt', true );
 
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-optionss="'.$field_filter.'" />';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-option="'.$field_filter.'" />';
         }else{
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
-          $field_opt = get_post_meta( $id, 'imageboss-options', true );
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-optionss="'.$field_filter.'" />';
+          $field_opt = get_post_meta( $id, 'imageboss-opt', true );
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-option="'.$field_filter.'" />';
         }
 
 
@@ -388,7 +387,7 @@ function reset_attribute_of_images(){
               $myvals = get_post_meta($images_id);
               foreach($myvals as $key=>$val){
                 foreach($val as $vals){
-                  if (($key=='imageboss-options') || ($key=='imageboss-width') || ($key=='imageboss-height') || ($key=='imageboss-cover-mode') || ($key=='imageboss-filter')){
+                  if (($key=='imageboss-opt') || ($key=='imageboss-width') || ($key=='imageboss-height') || ($key=='imageboss-cover-mode') || ($key=='imageboss-filter')){
                      update_post_meta($images_id, $key,'');
                   }
                  }
@@ -405,7 +404,7 @@ function foresight_hires_img_replace($the_content) {
     // Create a new istance of DOMDocument
     $post = new DOMDocument();
     // Load $the_content as HTML
-    $post->loadHTML('<?xml encoding="utf-8" ?>' . $the_content);
+    $post->loadHTML('<?xml encoding="utf-8">' . $the_content);
     // Look up for all the <img> tags.
     $imgs = $post->getElementsByTagName('img');
 
@@ -429,7 +428,7 @@ function foresight_hires_img_replace($the_content) {
 
           $ib_height = $img->getAttribute('imageboss-height');
 
-          $ib_option = $img->getAttribute('imageboss-options');
+          $ib_option = $img->getAttribute('imageboss-option');
 
           if($ib_option != ''){
             $ib_option_new = $ib_option."/";
@@ -443,7 +442,7 @@ function foresight_hires_img_replace($the_content) {
 
         }elseif($ib_opt == 'cdn'){
 
-          $ib_optionc = $img->getAttribute('imageboss-options');
+          $ib_optionc = $img->getAttribute('imageboss-option');
           if($ib_optionc != ''){
             $ib_option_newc = $ib_optionc."/";
             $my_src = "https://img.imageboss.me/cdn/".$ib_option_newc."".$src;
@@ -457,7 +456,7 @@ function foresight_hires_img_replace($the_content) {
 
           $ib_width = $img->getAttribute('imageboss-width');
 
-          $ib_optionw = $img->getAttribute('imageboss-options');
+          $ib_optionw = $img->getAttribute('imageboss-option');
 
           if($ib_optionw != ''){
             $ib_option_neww = $ib_optionw."/";
@@ -472,7 +471,7 @@ function foresight_hires_img_replace($the_content) {
 
           $ib_height = $img->getAttribute('imageboss-height');
 
-          $ib_optionh = $img->getAttribute('imageboss-options');
+          $ib_optionh = $img->getAttribute('imageboss-option');
 
           if($ib_optionh != ''){
             $ib_option_newh = $ib_optionh."/";
@@ -484,7 +483,7 @@ function foresight_hires_img_replace($the_content) {
           $img->setAttribute('src', $my_src);
 
         }else{
-          $ib_option2 = $img->getAttribute('imageboss-options');
+          $ib_option2 = $img->getAttribute('imageboss-option');
           if($ib_option2 != ''){
             $ib_option_new2 = $ib_option2."/";
             $my_src = "https://img.imageboss.me/cdn/".$ib_option_new2."".$src;
