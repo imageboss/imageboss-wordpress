@@ -1,9 +1,12 @@
 <?php
 /*
 Plugin Name: ImageBoss
+Description: Content aware image resizing, cropping, compression, cache and CDN. All web development best practices, hassle free in one simple and powerful API.
 Version: 1.0.2
 Author: ImageBoss
 Author URI: https://imageboss.me
+License: MIT
+License URI: https://opensource.org/licenses/MIT
 */
 
 register_activation_hook(__FILE__, 'ib_plugin_activate');
