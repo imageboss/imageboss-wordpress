@@ -138,50 +138,51 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
     <input type="submit" id="aei-im" class="button-primary" value="Yes"> &nbsp;&nbsp;<a class='button-primary b-text' href="<?php echo admin_url('admin.php?page=image-boss-setting'); ?>"> No </a>
 
 </form>
-<?php
-if (isset($_GET['settings-updated'])) {
-            ?>
+<?php if (isset($_GET['settings-updated'])) { ?>
 <script>
     window.location = "<?php echo admin_url('admin.php?page=image-boss-setting'); ?>";
 </script>
+<?php } ?>
 <?php
-}
-    } else {
-        if ((get_option('cdn_theme_layout') == '') && (get_option('cdn_inside_post') == '')) {?>
+} else {
+  if ((get_option('cdn_theme_layout') == '') && (get_option('cdn_inside_post') == '')) {
+?>
   <form method="post" action="<?php echo admin_url('admin.php?page=image-boss-setting&action=image-boss-welcome-screen') ?>" id="image_boss_settings">
-<?php } else {?>
+<?php } else { ?>
 <form method="post" action="options.php" id="image_boss_settings">
-<?php }
-        ?>
+<?php } ?>
+
 <div class="wrap">
 <h3>ImageBoss Settings</h3>
 <?php if (isset($_GET['settings-updated'])) {
-            echo "<div class='updated'><p>You have successfully saved the settings.</p></div>";
-        }?>
-    <?php settings_fields('imageboss-settings-group');?>
-    <?php do_settings_sections('imageboss-settings-group');?>
-    <table class="form-table">
+  echo "<div class='updated'><p>You have successfully saved the settings.</p></div>";
+} ?>
 
-        <tr valign="top">
-        <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN to theme / layout images</th>
-        <td><input type="checkbox" id="cdn_theme_layout" name="cdn_theme_layout" value="yes" <?php if (get_option('cdn_theme_layout') != '') {
-            echo 'checked';
-        }
-        ?> /></td>
-        </tr>
+<?php settings_fields('imageboss-settings-group');?>
+<?php do_settings_sections('imageboss-settings-group');?>
+  <table class="form-table">
+    <tr valign="top">
+    <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN to theme / layout images</th>
+      <td>
+        <input type="checkbox" id="cdn_theme_layout" name="cdn_theme_layout" value="yes" <?php if (get_option('cdn_theme_layout') != '') {
+          echo 'checked';
+        } ?> />
+      </td>
+    </tr>
 
-        <tr valign="top">
-        <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN for images inside posts</th>
-        <td><input type="checkbox" id="cdn_inside_post" name="cdn_inside_post" value="yes" <?php if (get_option('cdn_inside_post') != '') {
-            echo 'checked';
-        }
-        ?> /></td>
-        </tr>
-    </table>
+    <tr valign="top">
+    <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN for images inside posts</th>
+    <td>
+      <input type="checkbox" id="cdn_inside_post" name="cdn_inside_post" value="yes" <?php if (get_option('cdn_inside_post') != '') {
+        echo 'checked';
+      }
+      ?> />
+    </td>
+    </tr>
+  </table>
 
-    <input type="submit" class="button-primary" value="Save Changes">
-
-</form>
+  <input type="submit" class="button-primary" value="Save Changes">
+  </form>
 </div>
 <?php
 }
