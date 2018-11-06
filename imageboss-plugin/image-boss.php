@@ -412,6 +412,8 @@ add_action('media_buttons', 'reset_attribute_of_images');
 function foresight_hires_img_replace($the_content)
 {
     error_reporting(0);
+    $service_url = "https://img.imageboss.me";
+
     // Create a new istance of DOMDocument
     $post = new DOMDocument();
     // Load $the_content as HTML
@@ -423,8 +425,11 @@ function foresight_hires_img_replace($the_content)
     foreach ($imgs as $img) {
 
         $src = $img->getAttribute('src');
-
         $ib_opt = $img->getAttribute('imageboss-operation');
+
+        if (preg_match('/gravatar/', $src)) {
+            continue;
+        }
 
         if ($ib_opt == 'cover') {
 
@@ -440,9 +445,9 @@ function foresight_hires_img_replace($the_content)
 
             if ($ib_option != '') {
                 $ib_option_new = $ib_option . "/";
-                $my_src = "https://img.imageboss.me/cover" . $cmode . "/" . $ib_width . "x" . $ib_height . "/" . $ib_option_new . "" . $src;
+                $my_src = $service_url . "/cover" . $cmode . "/" . $ib_width . "x" . $ib_height . "/" . $ib_option_new . "" . $src;
             } else {
-                $my_src = "https://img.imageboss.me/cover" . $cmode . "/" . $ib_width . "x" . $ib_height . "/" . $src;
+                $my_src = $service_url . "/cover" . $cmode . "/" . $ib_width . "x" . $ib_height . "/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
@@ -452,9 +457,9 @@ function foresight_hires_img_replace($the_content)
             $ib_optionc = $img->getAttribute('imageboss-options');
             if ($ib_optionc != '') {
                 $ib_option_newc = $ib_optionc . "/";
-                $my_src = "https://img.imageboss.me/cdn/" . $ib_option_newc . "" . $src;
+                $my_src = $service_url . "/cdn/" . $ib_option_newc . "" . $src;
             } else {
-                $my_src = "https://img.imageboss.me/cdn/" . $src;
+                $my_src = $service_url . "/cdn/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
@@ -467,9 +472,9 @@ function foresight_hires_img_replace($the_content)
 
             if ($ib_optionw != '') {
                 $ib_option_neww = $ib_optionw . "/";
-                $my_src = "https://img.imageboss.me/width/" . $ib_width . "/" . $ib_option_neww . "" . $src;
+                $my_src = $service_url . "/width/" . $ib_width . "/" . $ib_option_neww . "" . $src;
             } else {
-                $my_src = "https://img.imageboss.me/width/" . $ib_width . "/" . $src;
+                $my_src = $service_url . "/width/" . $ib_width . "/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
@@ -482,9 +487,9 @@ function foresight_hires_img_replace($the_content)
 
             if ($ib_optionh != '') {
                 $ib_option_newh = $ib_optionh . "/";
-                $my_src = "https://img.imageboss.me/height/" . $ib_height . "/" . $ib_option_newh . "" . $src;
+                $my_src = $service_url . "/height/" . $ib_height . "/" . $ib_option_newh . "" . $src;
             } else {
-                $my_src = "https://img.imageboss.me/height/" . $ib_height . "/" . $src;
+                $my_src = $service_url . "/height/" . $ib_height . "/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
@@ -493,16 +498,15 @@ function foresight_hires_img_replace($the_content)
             $ib_option2 = $img->getAttribute('imageboss-options');
             if ($ib_option2 != '') {
                 $ib_option_new2 = $ib_option2 . "/";
-                $my_src = "https://img.imageboss.me/cdn/" . $ib_option_new2 . "" . $src;
+                $my_src = $service_url . "/cdn/" . $ib_option_new2 . "" . $src;
             } else {
-                $my_src = "https://img.imageboss.me/cdn/" . $src;
+                $my_src = $service_url . "/cdn/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
         }
 
     }
-    ;
 
     return $post->saveHTML();
 }
