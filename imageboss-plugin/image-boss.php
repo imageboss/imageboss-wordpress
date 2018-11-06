@@ -1,7 +1,6 @@
 <?php
 /*
 Plugin Name: ImageBoss
-Description: On-demand image processing. Like an absolute boss.
 Version: 1.0.2
 Author: ImageBoss
 Author URI: https://imageboss.me
