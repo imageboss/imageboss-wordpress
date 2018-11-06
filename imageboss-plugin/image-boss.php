@@ -293,30 +293,30 @@ function imageboss_custom_html_template($html, $id, $caption, $title, $align, $u
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
           $abd = 'cover-mode="'.$field_cover_mode.'"';
 
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" '.$abd.' imageboss-width="'.$field_width.'" imageboss-height="'.$field_height.'" imageboss-option="'.$field_filter.'"/>';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" '.$abd.' imageboss-width="'.$field_width.'" imageboss-height="'.$field_height.'" imageboss-options="'.$field_filter.'"/>';
 
         }elseif($field_opt == 'width'){
 
           $field_width = get_post_meta( $id, 'imageboss-width', true );
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-width="'.$field_width.'" imageboss-option="'.$field_filter.'"/>';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-width="'.$field_width.'" imageboss-options="'.$field_filter.'"/>';
 
 
         }
         elseif($field_opt == 'height'){
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
           $field_height = get_post_meta( $id, 'imageboss-height', true );
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-height="'.$field_height.'" imageboss-option="'.$field_filter.'"/>';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-height="'.$field_height.'" imageboss-options="'.$field_filter.'"/>';
         }
         elseif($field_opt == 'cdn'){
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
           $field_opt = get_post_meta( $id, 'imageboss-opt', true );
 
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-option="'.$field_filter.'" />';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-operation="'.$field_opt.'" imageboss-options="'.$field_filter.'" />';
         }else{
           $field_filter = get_post_meta( $id, 'imageboss-filter', true );
           $field_opt = get_post_meta( $id, 'imageboss-opt', true );
-          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-option="'.$field_filter.'" />';
+          $out .= '<img src="'. $image_boss[0] .'" alt="'.$alt.'" imageboss-options="'.$field_filter.'" />';
         }
 
 
@@ -428,7 +428,7 @@ function foresight_hires_img_replace($the_content) {
 
           $ib_height = $img->getAttribute('imageboss-height');
 
-          $ib_option = $img->getAttribute('imageboss-option');
+          $ib_option = $img->getAttribute('imageboss-options');
 
           if($ib_option != ''){
             $ib_option_new = $ib_option."/";
@@ -442,7 +442,7 @@ function foresight_hires_img_replace($the_content) {
 
         }elseif($ib_opt == 'cdn'){
 
-          $ib_optionc = $img->getAttribute('imageboss-option');
+          $ib_optionc = $img->getAttribute('imageboss-options');
           if($ib_optionc != ''){
             $ib_option_newc = $ib_optionc."/";
             $my_src = "https://img.imageboss.me/cdn/".$ib_option_newc."".$src;
@@ -456,7 +456,7 @@ function foresight_hires_img_replace($the_content) {
 
           $ib_width = $img->getAttribute('imageboss-width');
 
-          $ib_optionw = $img->getAttribute('imageboss-option');
+          $ib_optionw = $img->getAttribute('imageboss-options');
 
           if($ib_optionw != ''){
             $ib_option_neww = $ib_optionw."/";
@@ -471,7 +471,7 @@ function foresight_hires_img_replace($the_content) {
 
           $ib_height = $img->getAttribute('imageboss-height');
 
-          $ib_optionh = $img->getAttribute('imageboss-option');
+          $ib_optionh = $img->getAttribute('imageboss-options');
 
           if($ib_optionh != ''){
             $ib_option_newh = $ib_optionh."/";
@@ -483,7 +483,7 @@ function foresight_hires_img_replace($the_content) {
           $img->setAttribute('src', $my_src);
 
         }else{
-          $ib_option2 = $img->getAttribute('imageboss-option');
+          $ib_option2 = $img->getAttribute('imageboss-options');
           if($ib_option2 != ''){
             $ib_option_new2 = $ib_option2."/";
             $my_src = "https://img.imageboss.me/cdn/".$ib_option_new2."".$src;
