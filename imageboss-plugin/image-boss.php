@@ -512,3 +512,11 @@ function foresight_hires_img_replace($the_content)
 }
 
 add_filter('the_content', 'foresight_hires_img_replace');
+
+// wrapps the featured image
+add_filter('wp_get_attachment_image_attributes', function ($attr) {
+    $service_url = "https://img.imageboss.me";
+
+    $attr['src'] = $service_url . '/cdn/' . $attr['src'];
+    return $attr;
+});

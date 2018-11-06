@@ -26,7 +26,7 @@ function add_imageboss_url() {
         var elm = jQuery(img);
         var src = elm.attr('src');
         var cover_mode = '';
-
+        var service_url = 'https://img.imageboss.me';
 
         if (elm.attr('imageboss-operation') == 'cover') {
             var ib_option;
@@ -42,7 +42,7 @@ function add_imageboss_url() {
 
                 ib_option = '';
             }
-            elm.attr('src', `https://img.imageboss.me/cover${cover_mode}/${ib_width}x${ib_height}/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/cover${cover_mode}/${ib_width}x${ib_height}/${ib_option}${src}`);
         } else if (elm.attr('imageboss-operation') == 'width') {
             var ib_option;
             var ib_width = elm.attr('imageboss-width');
@@ -56,7 +56,7 @@ function add_imageboss_url() {
 
                 ib_option = '';
             }
-            elm.attr('src', `https://img.imageboss.me/width/${ib_width}/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/width/${ib_width}/${ib_option}${src}`);
         } else if (elm.attr('imageboss-operation') == 'height') {
             var ib_option;
 
@@ -72,7 +72,7 @@ function add_imageboss_url() {
 
                 ib_option = '';
             }
-            elm.attr('src', `https://img.imageboss.me/height/${ib_height}/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/height/${ib_height}/${ib_option}${src}`);
         } else {
             var ib_option;
 
@@ -82,7 +82,7 @@ function add_imageboss_url() {
 
                 ib_option = '';
             }
-            elm.attr('src', `https://img.imageboss.me/cdn/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/cdn/${ib_option}${src}`);
         }
 
 
