@@ -372,7 +372,7 @@ function my_front_end_function()
                     var replaceurls = imgsrc.match(findUrls);
 
                     if(replaceurls === null) {
-                        jQuery(this).attr('src', "https://img.imageboss.me/cdn/" + jQuery(this).attr('src'));
+                        // jQuery(this).attr('src', "https://img.imageboss.me/cdn/" + jQuery(this).attr('src'));
                     }
 
             });
