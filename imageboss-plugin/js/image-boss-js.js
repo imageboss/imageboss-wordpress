@@ -16,7 +16,7 @@ jQuery(document).on("change", "#operation", function(){
 
     var selectedText2 =  jQuery("#operation option:selected").text();
 
-    jQuery('input[name="attachments['+ht+'][imageboss-opt]"]').val(selectedText2).trigger('change');
+    jQuery('input[name="attachments['+ht+'][imageboss-operation]"]').val(selectedText2).trigger('change');
 
 
 
@@ -52,7 +52,7 @@ jQuery(document).on("change", "#operation", function(){
 
     }
 
-    else // if selected value have prefix other than Blue 
+    else // if selected value have prefix other than Blue
 
     {
 
@@ -82,4 +82,3 @@ jQuery(document).on("change", "#blue", function(){
     jQuery('input[name="attachments['+ht+'][imageboss-cover-mode]"]').val(selectedText2).trigger('change');
 
 });
-

@@ -238,25 +238,25 @@ function imageboss_add_media_custom_field($form_fields, $post)
 
     $imageboss_width = get_post_meta($post->ID, 'imageboss-width', true);
     $form_fields['imageboss-width'] = array(
-        'label' => __('IB Width'),
+        'label' => __('Width'),
         'input' => 'text',
         'value' => '',
     );
 
     $imageboss_height = get_post_meta($post->ID, 'imageboss-height', true);
     $form_fields['imageboss-height'] = array(
-        'label' => __('IB Height'),
+        'label' => __('Height'),
         'input' => 'text',
         'value' => '',
     );
-    $imageboss_opt = get_post_meta($post->ID, 'imageboss-opt', true);
-    $form_fields['imageboss-opt'] = array(
-        'label' => __('IB Operation'),
+    $imageboss_opt = get_post_meta($post->ID, 'imageboss-operation', true);
+    $form_fields['imageboss-operation'] = array(
+        'label' => __('Operation'),
         'input' => 'hidden',
         'value' => '',
     );
-    $imageboss_filter = get_post_meta($post->ID, 'imageboss-filter', true);
-    $form_fields['imageboss-filter'] = array(
+    $imageboss_options = get_post_meta($post->ID, 'imageboss-options', true);
+    $form_fields['imageboss-options'] = array(
         'label' => __('Options'),
         'input' => 'text',
         'value' => '',
@@ -274,14 +274,14 @@ function imageboss_save_attachment_field($post, $attachment)
     if (isset($attachment['imageboss-width'])) {
         update_post_meta($post['ID'], 'imageboss-width', $attachment['imageboss-width']);
     }
-    if (isset($attachment['imageboss-opt'])) {
-        update_post_meta($post['ID'], 'imageboss-opt', $attachment['imageboss-opt']);
+    if (isset($attachment['imageboss-operation'])) {
+        update_post_meta($post['ID'], 'imageboss-operation', $attachment['imageboss-operation']);
     }
     if (isset($attachment['imageboss-cover-mode'])) {
         update_post_meta($post['ID'], 'imageboss-cover-mode', $attachment['imageboss-cover-mode']);
     }
-    if (isset($attachment['imageboss-filter'])) {
-        update_post_meta($post['ID'], 'imageboss-filter', $attachment['imageboss-filter']);
+    if (isset($attachment['imageboss-options'])) {
+        update_post_meta($post['ID'], 'imageboss-options', $attachment['imageboss-options']);
     }
 
     return $post;
@@ -301,36 +301,36 @@ function imageboss_custom_html_template($html, $id, $caption, $title, $align, $u
             $out .= '<a href="' . $url . '" class="fancybox">';
         }
 
-        $field_opt = get_post_meta($id, 'imageboss-opt', true);
+        $field_operation = get_post_meta($id, 'imageboss-operation', true);
 
-        if ($field_opt == 'cover') {
+        if ($field_operation == 'cover') {
             $field_width = get_post_meta($id, 'imageboss-width', true);
             $field_height = get_post_meta($id, 'imageboss-height', true);
             $field_cover_mode = get_post_meta($id, 'imageboss-cover-mode', true);
-            $field_filter = get_post_meta($id, 'imageboss-filter', true);
+            $field_options = get_post_meta($id, 'imageboss-options', true);
             $abd = 'cover-mode="' . $field_cover_mode . '"';
 
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_opt . '" ' . $abd . ' imageboss-width="' . $field_width . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_filter . '"/>';
+            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" ' . $abd . ' imageboss-width="' . $field_width . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_options . '"/>';
 
-        } elseif ($field_opt == 'width') {
+        } elseif ($field_operation == 'width') {
 
             $field_width = get_post_meta($id, 'imageboss-width', true);
-            $field_filter = get_post_meta($id, 'imageboss-filter', true);
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_opt . '" imageboss-width="' . $field_width . '" imageboss-options="' . $field_filter . '"/>';
+            $field_options = get_post_meta($id, 'imageboss-options', true);
+            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-width="' . $field_width . '" imageboss-options="' . $field_options . '"/>';
 
-        } elseif ($field_opt == 'height') {
-            $field_filter = get_post_meta($id, 'imageboss-filter', true);
+        } elseif ($field_operation == 'height') {
+            $field_options = get_post_meta($id, 'imageboss-options', true);
             $field_height = get_post_meta($id, 'imageboss-height', true);
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_opt . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_filter . '"/>';
-        } elseif ($field_opt == 'cdn') {
-            $field_filter = get_post_meta($id, 'imageboss-filter', true);
-            $field_opt = get_post_meta($id, 'imageboss-opt', true);
+            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-height="' . $field_height . '" imageboss-options="' . $field_options . '"/>';
+        } elseif ($field_operation == 'cdn') {
+            $field_options = get_post_meta($id, 'imageboss-options', true);
+            $field_operation = get_post_meta($id, 'imageboss-operation', true);
 
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_opt . '" imageboss-options="' . $field_filter . '" />';
+            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-operation="' . $field_operation . '" imageboss-options="' . $field_options . '" />';
         } else {
-            $field_filter = get_post_meta($id, 'imageboss-filter', true);
-            $field_opt = get_post_meta($id, 'imageboss-opt', true);
-            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-options="' . $field_filter . '" />';
+            $field_options = get_post_meta($id, 'imageboss-options', true);
+            $field_operation = get_post_meta($id, 'imageboss-operation', true);
+            $out .= '<img src="' . $image_boss[0] . '" alt="' . $alt . '" imageboss-options="' . $field_options . '" />';
         }
 
         if ($url) {
@@ -399,7 +399,7 @@ function reset_attribute_of_images()
         $myvals = get_post_meta($images_id);
         foreach ($myvals as $key => $val) {
             foreach ($val as $vals) {
-                if (($key == 'imageboss-opt') || ($key == 'imageboss-width') || ($key == 'imageboss-height') || ($key == 'imageboss-cover-mode') || ($key == 'imageboss-filter')) {
+                if (($key == 'imageboss-operation') || ($key == 'imageboss-width') || ($key == 'imageboss-height') || ($key == 'imageboss-cover-mode') || ($key == 'imageboss-options')) {
                     update_post_meta($images_id, $key, '');
                 }
             }
