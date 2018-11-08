@@ -9,51 +9,52 @@ License: MIT
 License URI: https://opensource.org/licenses/MIT
 */
 
-register_activation_hook(__FILE__, 'ib_plugin_activate');
-add_action('admin_init', 'ib_plugin_redirect');
+// ibup = ImageBoss URLs Plugin
+register_activation_hook(__FILE__, 'ibup_plugin_activate');
+add_action('admin_init', 'ibup_plugin_redirect');
 
-function ib_plugin_activate()
+function ibup_plugin_activate()
 {
-    add_option('ib_plugin_redirect', true);
+    add_option('ibup_plugin_redirect', true);
 }
 
-function ib_plugin_redirect()
+function ibup_plugin_redirect()
 {
-    if (get_option('ib_plugin_redirect', false)) {
-        delete_option('ib_plugin_redirect');
+    if (get_option('ibup_plugin_redirect', false)) {
+        delete_option('ibup_plugin_redirect');
         if (!isset($_GET['activate-multi'])) {
             wp_redirect("admin.php?page=image-boss-setting");
         }
     }
 }
 
-function imageboss_js()
+function ibup_load_assets()
 {
     wp_add_inline_script('mytheme-typekit', 'try{Typekit.load({ async: true });}catch(e){}');
     wp_enqueue_script('image-boss', plugins_url('/js/image-boss-js.js', __FILE__));
     wp_enqueue_style('image-boss', plugins_url('/css/admin_style.css', __FILE__));
 }
 
-add_action('admin_enqueue_scripts', 'imageboss_js');
+add_action('admin_enqueue_scripts', 'ibup_load_assets');
 
-function custom_admin_js()
+function ibup_admin_assets_js()
 {
     $url = plugins_url('/js/image-boss-custom-js.js', __FILE__);
     echo '<script type="text/javascript" src="' . $url . '"></script>';
-    echo '<script type="text/javascript">window.AUTO_IMAGEBOSS_CDN = "' . get_option('auto_imageboss_cdn') . '";</script>';
+    echo '<script type="text/javascript">window.AUTO_IMAGEBOSS_CDN = "' . get_option('ibup_auto_imageboss_cdn') . '";</script>';
 }
-add_action('admin_footer', 'custom_admin_js');
+add_action('admin_footer', 'ibup_admin_assets_js');
 
-add_action('admin_menu', 'register_menu_page');
+add_action('admin_menu', 'ibup_register_menu_page');
 
-function register_menu_page()
+function ibup_register_menu_page()
 {
     add_menu_page(
         'Dashboard',
         'ImageBoss',
         'manage_options',
         'image-boss',
-        'image_boss_main_page'
+        'ibup_main_page'
     );
 
     add_submenu_page(
@@ -74,13 +75,13 @@ function register_menu_page()
     );
 }
 
-add_action('admin_init', 'register_mysettings');
+add_action('admin_init', 'ibup_register_mysettings');
 
-function register_mysettings() {
-    register_setting('imageboss-settings-group', 'auto_imageboss_cdn');
+function ibup_register_mysettings() {
+    register_setting('imageboss-settings-group', 'ibup_auto_imageboss_cdn');
 }
 
-function image_boss_main_page()
+function ibup_main_page()
 {
     ?>
 <div class="wrap">
@@ -118,7 +119,7 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
     <?php do_settings_sections('imageboss-settings-group');?>
     <table class="form-table">
         <tr valign="top"  style="display: none;">
-        <td><input type="checkbox" id="auto_imageboss_cdn" name="auto_imageboss_cdn" value="yes" <?php if ($_POST['auto_imageboss_cdn'] == 'yes') {
+        <td><input type="checkbox" id="ibup_auto_imageboss_cdn" name="ibup_auto_imageboss_cdn" value="yes" <?php if ($_POST['ibup_auto_imageboss_cdn'] == 'yes') {
             echo 'checked';
         }
         ?>/></td>
@@ -135,7 +136,7 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
 <?php } ?>
 <?php
 } else {
-  if (get_option('auto_imageboss_cdn') == '') {
+  if (get_option('ibup_auto_imageboss_cdn') == '') {
 ?>
   <form method="post" action="<?php echo admin_url('admin.php?page=image-boss-setting&action=image-boss-welcome-screen') ?>" id="image_boss_settings">
 <?php } else { ?>
@@ -154,7 +155,7 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
     <tr valign="top">
     <th scope="row" style="width: 40%;">Automatically use ImageBoss CDN for all my images</th>
     <td>
-      <input type="checkbox" id="auto_imageboss_cdn" name="auto_imageboss_cdn" value="yes" <?php if (get_option('auto_imageboss_cdn') != '') {
+      <input type="checkbox" id="ibup_auto_imageboss_cdn" name="ibup_auto_imageboss_cdn" value="yes" <?php if (get_option('ibup_auto_imageboss_cdn') != '') {
         echo 'checked';
       }
       ?> />
@@ -169,7 +170,7 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
 }
 }
 
-function imageboss_add_media_custom_field($form_fields, $post)
+function ibup_add_media_custom_field($form_fields, $post)
 {
 
     $form_fields['imageBoss-configuration'] = array(
@@ -245,9 +246,9 @@ function imageboss_add_media_custom_field($form_fields, $post)
     return $form_fields;
 }
 
-add_filter('attachment_fields_to_edit', 'imageboss_add_media_custom_field', 10, 2);
+add_filter('attachment_fields_to_edit', 'ibup_add_media_custom_field', 10, 2);
 
-function imageboss_save_attachment_field($post, $attachment)
+function ibup_save_attachment_field($post, $attachment)
 {
     if (isset($attachment['imageboss-height'])) {
         update_post_meta($post['ID'], 'imageboss-height', $attachment['imageboss-height']);
@@ -268,9 +269,9 @@ function imageboss_save_attachment_field($post, $attachment)
     return $post;
 }
 
-add_filter('attachment_fields_to_save', 'imageboss_save_attachment_field', 10, 2);
+add_filter('attachment_fields_to_save', 'ibup_save_attachment_field', 10, 2);
 
-function imageboss_custom_html_template($html, $id, $caption, $title, $align, $url, $size, $alt)
+function ibup_custom_html_template($html, $id, $caption, $title, $align, $url, $size, $alt)
 {
 
     list($img_src, $width, $height) = image_downsize($id, $size);
@@ -321,18 +322,18 @@ function imageboss_custom_html_template($html, $id, $caption, $title, $align, $u
     return $out; // the result HTML
 }
 
-add_filter('image_send_to_editor', 'imageboss_custom_html_template', 1, 8);
+add_filter('image_send_to_editor', 'ibup_custom_html_template', 1, 8);
 
-function override_mce_options($initArray)
+function ibup_override_mce_options($initArray)
 {
     $opts = '*[*]';
     $initArray['valid_elements'] = $opts;
     $initArray['extended_valid_elements'] = $opts;
     return $initArray;
 }
-add_filter('tiny_mce_before_init', 'override_mce_options');
+add_filter('tiny_mce_before_init', 'ibup_override_mce_options');
 
-function reset_attribute_of_images()
+function ibup_reset_attribute_of_images()
 {
 
     $query_images_args = array(
@@ -358,9 +359,9 @@ function reset_attribute_of_images()
     }
 
 }
-add_action('media_buttons', 'reset_attribute_of_images');
+add_action('media_buttons', 'ibup_reset_attribute_of_images');
 
-function apply_imageboss_images($the_content)
+function ibup_apply_imageboss_images($the_content)
 {
     error_reporting(0);
     $service_url = "https://img.imageboss.me";
@@ -376,80 +377,80 @@ function apply_imageboss_images($the_content)
     foreach ($imgs as $img) {
 
         $src = $img->getAttribute('src');
-        $ib_opt = $img->getAttribute('imageboss-operation');
+        $ibup_opt = $img->getAttribute('imageboss-operation');
 
         if (preg_match('/gravatar/', $src)) {
             continue;
         }
 
-        if ($ib_opt == 'cover') {
+        if ($ibup_opt == 'cover') {
 
             $cover_mode = $img->getAttribute('cover-mode');
             if ($cover_mode != '') {
                 $cmode = ":" . $cover_mode;
             }
-            $ib_width = $img->getAttribute('imageboss-width');
+            $ibup_width = $img->getAttribute('imageboss-width');
 
-            $ib_height = $img->getAttribute('imageboss-height');
+            $ibup_height = $img->getAttribute('imageboss-height');
 
-            $ib_option = $img->getAttribute('imageboss-options');
+            $ibup_option = $img->getAttribute('imageboss-options');
 
-            if ($ib_option != '') {
-                $ib_option_new = $ib_option . "/";
-                $my_src = $service_url . "/cover" . $cmode . "/" . $ib_width . "x" . $ib_height . "/" . $ib_option_new . "" . $src;
+            if ($ibup_option != '') {
+                $ibup_option_new = $ibup_option . "/";
+                $my_src = $service_url . "/cover" . $cmode . "/" . $ibup_width . "x" . $ibup_height . "/" . $ibup_option_new . "" . $src;
             } else {
-                $my_src = $service_url . "/cover" . $cmode . "/" . $ib_width . "x" . $ib_height . "/" . $src;
+                $my_src = $service_url . "/cover" . $cmode . "/" . $ibup_width . "x" . $ibup_height . "/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
 
-        } elseif ($ib_opt == 'cdn') {
+        } elseif ($ibup_opt == 'cdn') {
 
-            $ib_optionc = $img->getAttribute('imageboss-options');
-            if ($ib_optionc != '') {
-                $ib_option_newc = $ib_optionc . "/";
-                $my_src = $service_url . "/cdn/" . $ib_option_newc . "" . $src;
+            $ibup_optionc = $img->getAttribute('imageboss-options');
+            if ($ibup_optionc != '') {
+                $ibup_option_newc = $ibup_optionc . "/";
+                $my_src = $service_url . "/cdn/" . $ibup_option_newc . "" . $src;
             } else {
                 $my_src = $service_url . "/cdn/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
 
-        } elseif ($ib_opt == 'width') {
+        } elseif ($ibup_opt == 'width') {
 
-            $ib_width = $img->getAttribute('imageboss-width');
+            $ibup_width = $img->getAttribute('imageboss-width');
 
-            $ib_optionw = $img->getAttribute('imageboss-options');
+            $ibup_optionw = $img->getAttribute('imageboss-options');
 
-            if ($ib_optionw != '') {
-                $ib_option_neww = $ib_optionw . "/";
-                $my_src = $service_url . "/width/" . $ib_width . "/" . $ib_option_neww . "" . $src;
+            if ($ibup_optionw != '') {
+                $ibup_option_neww = $ibup_optionw . "/";
+                $my_src = $service_url . "/width/" . $ibup_width . "/" . $ibup_option_neww . "" . $src;
             } else {
-                $my_src = $service_url . "/width/" . $ib_width . "/" . $src;
+                $my_src = $service_url . "/width/" . $ibup_width . "/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
 
-        } elseif ($ib_opt == 'height') {
+        } elseif ($ibup_opt == 'height') {
 
-            $ib_height = $img->getAttribute('imageboss-height');
+            $ibup_height = $img->getAttribute('imageboss-height');
 
-            $ib_optionh = $img->getAttribute('imageboss-options');
+            $ibup_optionh = $img->getAttribute('imageboss-options');
 
-            if ($ib_optionh != '') {
-                $ib_option_newh = $ib_optionh . "/";
-                $my_src = $service_url . "/height/" . $ib_height . "/" . $ib_option_newh . "" . $src;
+            if ($ibup_optionh != '') {
+                $ibup_option_newh = $ibup_optionh . "/";
+                $my_src = $service_url . "/height/" . $ibup_height . "/" . $ibup_option_newh . "" . $src;
             } else {
-                $my_src = $service_url . "/height/" . $ib_height . "/" . $src;
+                $my_src = $service_url . "/height/" . $ibup_height . "/" . $src;
             }
 
             $img->setAttribute('src', $my_src);
 
-        } else if (get_option('auto_imageboss_cdn') != '') {
-            $ib_option2 = $img->getAttribute('imageboss-options');
-            if ($ib_option2 != '') {
-                $ib_option_new2 = $ib_option2 . "/";
-                $my_src = $service_url . "/cdn/" . $ib_option_new2 . "" . $src;
+        } else if (get_option('ibup_auto_imageboss_cdn') != '') {
+            $ibup_option2 = $img->getAttribute('imageboss-options');
+            if ($ibup_option2 != '') {
+                $ibup_option_new2 = $ibup_option2 . "/";
+                $my_src = $service_url . "/cdn/" . $ibup_option_new2 . "" . $src;
             } else {
                 $my_src = $service_url . "/cdn/" . $src;
             }
@@ -464,17 +465,17 @@ function apply_imageboss_images($the_content)
 
 
 // wraps the entire blog html output
-function callback($buffer) {
-    return apply_imageboss_images($buffer);
+function ibup_buffer_callback($buffer) {
+    return ibup_apply_imageboss_images($buffer);
 }
 
-function buffer_start() {
-    ob_start("callback");
+function ibup_buffer_start() {
+    ob_start("ibup_buffer_callback");
 }
 
-function buffer_end() {
+function ibup_buffer_end() {
     ob_end_flush();
 }
 
-add_action('wp_head', 'buffer_start');
-add_action('wp_footer', 'buffer_end');
+add_action('wp_head', 'ibup_buffer_start');
+add_action('wp_footer', 'ibup_buffer_end');

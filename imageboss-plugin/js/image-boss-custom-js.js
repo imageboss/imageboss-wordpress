@@ -1,5 +1,5 @@
 jQuery( document ).on( 'tinymce-editor-init', function( event, editor ) {
-    add_imageboss_url();
+    ibup_add_imageboss_url();
 
     if (wp.media) {
         wp.media.view.Modal.prototype.on('open', function() {
@@ -8,19 +8,17 @@ jQuery( document ).on( 'tinymce-editor-init', function( event, editor ) {
 
             selection.on( 'selection:single', function ( event ) {
                 jQuery('#operation').trigger('change');
-
-
             } );
         });
     }
 
     tinymce.activeEditor.on('SetContent', function (e) {
-        add_imageboss_url();
+        ibup_add_imageboss_url();
     });
 
 });
 
-function add_imageboss_url() {
+function ibup_add_imageboss_url() {
     var images = jQuery('.mce-container').contents().find('iframe').contents().find('img');
     images.each((i, img) => {
         var elm = jQuery(img);
@@ -29,60 +27,60 @@ function add_imageboss_url() {
         var service_url = 'https://img.imageboss.me';
 
         if (elm.attr('imageboss-operation') == 'cover') {
-            var ib_option;
-            var ib_width = elm.attr('imageboss-width');
-            var ib_height = elm.attr('imageboss-height');
+            var ibup_option;
+            var ibup_width = elm.attr('imageboss-width');
+            var ibup_height = elm.attr('imageboss-height');
             if (elm.attr('cover-mode') != '') {
                 cover_mode = ':' + elm.attr('cover-mode');
             }
 
             if (elm.attr('imageboss-options') != '' && typeof elm.attr('imageboss-options') !== 'undefined') {
-                ib_option = elm.attr('imageboss-options') + '/';
+                ibup_option = elm.attr('imageboss-options') + '/';
             }else{
 
-                ib_option = '';
+                ibup_option = '';
             }
-            elm.attr('src', `${service_url}/cover${cover_mode}/${ib_width}x${ib_height}/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/cover${cover_mode}/${ibup_width}x${ibup_height}/${ibup_option}${src}`);
         } else if (elm.attr('imageboss-operation') == 'width') {
-            var ib_option;
-            var ib_width = elm.attr('imageboss-width');
+            var ibup_option;
+            var ibup_width = elm.attr('imageboss-width');
             if (elm.attr('cover-mode') != '') {
                 cover_mode = ':' + elm.attr('cover-mode');
             }
 
             if (elm.attr('imageboss-options') != '' && typeof elm.attr('imageboss-options') !== 'undefined') {
-                ib_option = elm.attr('imageboss-options') + '/';
+                ibup_option = elm.attr('imageboss-options') + '/';
             }else{
 
-                ib_option = '';
+                ibup_option = '';
             }
-            elm.attr('src', `${service_url}/width/${ib_width}/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/width/${ibup_width}/${ibup_option}${src}`);
         } else if (elm.attr('imageboss-operation') == 'height') {
-            var ib_option;
+            var ibup_option;
 
-            var ib_height = elm.attr('imageboss-height');
+            var ibup_height = elm.attr('imageboss-height');
 
             if (elm.attr('cover-mode') != '') {
                 cover_mode = ':' + elm.attr('cover-mode');
             }
 
             if (elm.attr('imageboss-options') != '' && typeof elm.attr('imageboss-options') !== 'undefined') {
-                ib_option = elm.attr('imageboss-options') + '/';
+                ibup_option = elm.attr('imageboss-options') + '/';
             }else{
 
-                ib_option = '';
+                ibup_option = '';
             }
-            elm.attr('src', `${service_url}/height/${ib_height}/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/height/${ibup_height}/${ibup_option}${src}`);
         } else if (elm.attr('imageboss-operation') == 'cdn' || window.AUTO_IMAGEBOSS_CDN != '') {
-            var ib_option;
+            var ibup_option;
 
             if (elm.attr('imageboss-options') != '' && typeof elm.attr('imageboss-options') !== 'undefined') {
-                ib_option = elm.attr('imageboss-options') + '/';
+                ibup_option = elm.attr('imageboss-options') + '/';
             } else {
 
-                ib_option = '';
+                ibup_option = '';
             }
-            elm.attr('src', `${service_url}/cdn/${ib_option}${src}`);
+            elm.attr('src', `${service_url}/cdn/${ibup_option}${src}`);
         }
     });
 }
