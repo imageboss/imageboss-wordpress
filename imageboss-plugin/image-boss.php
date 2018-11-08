@@ -361,10 +361,32 @@ function ibup_reset_attribute_of_images()
 }
 add_action('media_buttons', 'ibup_reset_attribute_of_images');
 
+function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options) {
+  $serviceUrl = 'https://img.imageboss.me';
+  $template = '/:operation/:options/';
+
+  if ($operation === 'cover') {
+    $template = '/:operation::cover_mode/:widthx:height/:options/';
+  } else if ($operation === 'width') {
+    $template = '/:operation/:width/:options/';
+  } else if ($operation === 'height') {
+    $template = '/:operation/:height/:options/';
+  }
+
+  $finalUrl = str_replace(':operation', $operation ?: 'cdn', $template);
+  $finalUrl = str_replace(':cover_mode', $cover_mode, $finalUrl);
+  $finalUrl = str_replace(':width', $width, $finalUrl);
+  $finalUrl = str_replace(':height', $height, $finalUrl);
+  $finalUrl = str_replace(':options', $options, $finalUrl);
+  $finalUrl = preg_replace('/\/\//', '/', $finalUrl);
+  $finalUrl = preg_replace('/:\//', '/', $finalUrl);
+
+  return $serviceUrl . $finalUrl . $src;
+}
+
 function ibup_apply_imageboss_images($the_content)
 {
     error_reporting(0);
-    $service_url = "https://img.imageboss.me";
 
     // Create a new istance of DOMDocument
     $post = new DOMDocument();
@@ -375,89 +397,20 @@ function ibup_apply_imageboss_images($the_content)
 
     // Iteration time
     foreach ($imgs as $img) {
-
         $src = $img->getAttribute('src');
-        $ibup_opt = $img->getAttribute('imageboss-operation');
 
         if (preg_match('/gravatar/', $src)) {
             continue;
         }
 
-        if ($ibup_opt == 'cover') {
+        $operation = $img->getAttribute('imageboss-operation');
+        $cover_mode = $img->getAttribute('cover-mode');
+        $width = $img->getAttribute('imageboss-width');
+        $height = $img->getAttribute('imageboss-height');
+        $options = $img->getAttribute('imageboss-options');
 
-            $cover_mode = $img->getAttribute('cover-mode');
-            if ($cover_mode != '') {
-                $cmode = ":" . $cover_mode;
-            }
-            $ibup_width = $img->getAttribute('imageboss-width');
-
-            $ibup_height = $img->getAttribute('imageboss-height');
-
-            $ibup_option = $img->getAttribute('imageboss-options');
-
-            if ($ibup_option != '') {
-                $ibup_option_new = $ibup_option . "/";
-                $my_src = $service_url . "/cover" . $cmode . "/" . $ibup_width . "x" . $ibup_height . "/" . $ibup_option_new . "" . $src;
-            } else {
-                $my_src = $service_url . "/cover" . $cmode . "/" . $ibup_width . "x" . $ibup_height . "/" . $src;
-            }
-
-            $img->setAttribute('src', $my_src);
-
-        } elseif ($ibup_opt == 'cdn') {
-
-            $ibup_optionc = $img->getAttribute('imageboss-options');
-            if ($ibup_optionc != '') {
-                $ibup_option_newc = $ibup_optionc . "/";
-                $my_src = $service_url . "/cdn/" . $ibup_option_newc . "" . $src;
-            } else {
-                $my_src = $service_url . "/cdn/" . $src;
-            }
-
-            $img->setAttribute('src', $my_src);
-
-        } elseif ($ibup_opt == 'width') {
-
-            $ibup_width = $img->getAttribute('imageboss-width');
-
-            $ibup_optionw = $img->getAttribute('imageboss-options');
-
-            if ($ibup_optionw != '') {
-                $ibup_option_neww = $ibup_optionw . "/";
-                $my_src = $service_url . "/width/" . $ibup_width . "/" . $ibup_option_neww . "" . $src;
-            } else {
-                $my_src = $service_url . "/width/" . $ibup_width . "/" . $src;
-            }
-
-            $img->setAttribute('src', $my_src);
-
-        } elseif ($ibup_opt == 'height') {
-
-            $ibup_height = $img->getAttribute('imageboss-height');
-
-            $ibup_optionh = $img->getAttribute('imageboss-options');
-
-            if ($ibup_optionh != '') {
-                $ibup_option_newh = $ibup_optionh . "/";
-                $my_src = $service_url . "/height/" . $ibup_height . "/" . $ibup_option_newh . "" . $src;
-            } else {
-                $my_src = $service_url . "/height/" . $ibup_height . "/" . $src;
-            }
-
-            $img->setAttribute('src', $my_src);
-
-        } else if (get_option('ibup_auto_imageboss_cdn') != '') {
-            $ibup_option2 = $img->getAttribute('imageboss-options');
-            if ($ibup_option2 != '') {
-                $ibup_option_new2 = $ibup_option2 . "/";
-                $my_src = $service_url . "/cdn/" . $ibup_option_new2 . "" . $src;
-            } else {
-                $my_src = $service_url . "/cdn/" . $src;
-            }
-
-            $img->setAttribute('src', $my_src);
-        }
-
+        $new_src = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options);
+        $img->setAttribute('src', $new_src);
     }
 
     return $post->saveHTML();
