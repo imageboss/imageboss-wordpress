@@ -28,10 +28,10 @@ Installing "WordPress ImageBoss Plugin" can be done either by searching for "Ima
 ### Activating CDN features
 When you install the plugin this is disable by default. Go to your Dashboard -> ImageBoss -> Settings and activate.
 
-[![Settings](./imageboss-plugin/assets/settings.png)](https://imageboss.me)
+[![Settings](./imageboss-plugin/assets/screenshot-2.png)](https://imageboss.me)
 
 ### Adding Images With Custom Configuration
-[![Features](./imageboss-plugin/assets/add-media-widget.png)](https://imageboss.me)
+[![Features](./imageboss-plugin/assets/screenshot-4.png)](https://imageboss.me)
 
 ### Using ImageBoss on your theme
 ```html
