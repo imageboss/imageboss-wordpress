@@ -23,6 +23,8 @@ Content aware image resizing, cropping, compression, cache and CDN. All web deve
 * Image Filters.
 * Watermarking.
 
+Caution: This plugin may cause some server side cache services to return non-cached content to all users.
+
 == Installation ==
 
 Installing "WordPress ImageBoss Plugin" can be done either by searching for "ImageBoss" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
