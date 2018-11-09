@@ -64,12 +64,9 @@ function ibup_apply_imageboss_urls($the_content)
         }
 
         // TODO: generate srcset if it doesnt exist
-        //       using option dpr:1, drp:2, drp:3...
+        //       using option dpr:1, dpr:2, dpr:3...
 
     }
 
     return $post->saveHTML();
 }
-
-
-?>
