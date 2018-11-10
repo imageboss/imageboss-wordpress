@@ -17,9 +17,9 @@ This plugin allows you to automatically serve all your image files via ImageBoss
 * Watermarking.
 
 ## Manual Installation
-Installing "WordPress ImageBoss Plugin" can be done either by searching for "ImageBoss" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
+Installing "ImageBoss WordPress Plugin" can be done either by searching for "ImageBoss" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
-1. Download the plugin via https://github.com/imageboss/imageboss-wordpress/raw/master/imageboss-plugin.zip
+1. Download the plugin via https://wordpress.org/plugins/imageboss
 2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
@@ -28,10 +28,10 @@ Installing "WordPress ImageBoss Plugin" can be done either by searching for "Ima
 ### Activating CDN features
 When you install the plugin this is disable by default. Go to your Dashboard -> ImageBoss -> Settings and activate.
 
-[![Settings](./imageboss-plugin/assets/screenshot-2.png)](https://imageboss.me)
+[![Settings](./assets/screenshot-2.png)](https://imageboss.me)
 
 ### Adding Images With Custom Configuration
-[![Features](./imageboss-plugin/assets/screenshot-4.png)](https://imageboss.me)
+[![Features](./assets/screenshot-4.png)](https://imageboss.me)
 
 ### Using ImageBoss on your theme
 ```html
