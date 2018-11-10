@@ -2,7 +2,7 @@
 function image_boss_settings()
 {
 
-if ($_GET['action'] == 'image-boss-welcome-screen') {
+if ($_GET['action'] == 'imageboss-welcome-screen') {
   echo "<h3>Welcome to ImageBoss</h3>";
   $url = site_url();
   echo "<h3>Please check the host " . $url . " is on the list of authorised hosts on the <a target='_blank' href='https://imageboss.me/dashboard'>ImageBoss Dashboard</a></h3>";
@@ -20,17 +20,17 @@ if ($_GET['action'] == 'image-boss-welcome-screen') {
         </tr>
     </table>
 
-    <input type="submit" id="aei-im" class="button-primary" value="Yes"> &nbsp;&nbsp;<a class='button-primary b-text' href="<?php echo admin_url('admin.php?page=image-boss-setting'); ?>"> No </a>
+    <input type="submit" id="aei-im" class="button-primary" value="Yes"> &nbsp;&nbsp;<a class='button-primary b-text' href="<?php echo admin_url('admin.php?page=imageboss-setting'); ?>"> No </a>
   </form>
   <?php if (isset($_GET['settings-updated'])) { ?>
         <script>
-          window.location = "<?php echo admin_url('admin.php?page=image-boss-setting'); ?>";
+          window.location = "<?php echo admin_url('admin.php?page=imageboss-setting'); ?>";
         </script>
 <?php }
 } else {
   if (get_option('ibup_auto_imageboss_cdn') == '') {
 ?>
-  <form method="post" action="<?php echo admin_url('admin.php?page=image-boss-setting&action=image-boss-welcome-screen') ?>" id="image_boss_settings">
+  <form method="post" action="<?php echo admin_url('admin.php?page=imageboss-setting&action=imageboss-welcome-screen') ?>" id="image_boss_settings">
 <?php } else { ?>
 <form method="post" action="options.php" id="image_boss_settings">
 <?php }?>

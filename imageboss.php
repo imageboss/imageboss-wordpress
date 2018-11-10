@@ -10,5 +10,5 @@ License URI: https://opensource.org/licenses/MIT
 */
 
 require_once plugin_dir_path(__FILE__) . '/includes/url.php';
-require_once plugin_dir_path(__FILE__) . '/admin/image-boss-admin.php';
-require_once plugin_dir_path(__FILE__) . '/public/image-boss-public.php';
+require_once plugin_dir_path(__FILE__) . '/admin/imageboss-admin.php';
+require_once plugin_dir_path(__FILE__) . '/public/imageboss-public.php';

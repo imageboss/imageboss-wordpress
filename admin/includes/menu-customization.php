@@ -7,16 +7,16 @@ function ibup_register_menu_page()
     'Dashboard',
     'ImageBoss',
     'manage_options',
-    'image-boss',
+    'imageboss',
     'ibup_main_page'
   );
 
   add_submenu_page(
-    'image-boss',
+    'imageboss',
     'Settings',
     'Settings',
     'manage_options',
-    'image-boss-setting',
+    'imageboss-setting',
     'image_boss_settings'
   );
   add_submenu_page(
@@ -24,7 +24,7 @@ function ibup_register_menu_page()
     'Welcome to ImageBoss',
     'Settings',
     'manage_options',
-    'image-boss-welcome-screen',
+    'imageboss-welcome-screen',
     'image_boss_welcome_screen'
   );
 }

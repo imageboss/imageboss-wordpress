@@ -3,9 +3,9 @@
 add_action('admin_enqueue_scripts', 'ibup_load_assets');
 function ibup_load_assets()
 {
-    wp_enqueue_script('image-boss', plugin_dir_url(__FILE__) . '../js/url.js');
-    wp_enqueue_script('image-boss', plugin_dir_url(__FILE__) . '../js/add-media.js');
-    wp_enqueue_style('image-boss', plugin_dir_url(__FILE__) . '../css/admin_style.css');
+    wp_enqueue_script('imageboss', plugin_dir_url(__FILE__) . '../js/url.js');
+    wp_enqueue_script('imageboss', plugin_dir_url(__FILE__) . '../js/add-media.js');
+    wp_enqueue_style('imageboss', plugin_dir_url(__FILE__) . '../css/admin_style.css');
 }
 
 add_action('admin_footer', 'ibup_admin_assets_js');

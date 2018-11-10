@@ -13,7 +13,7 @@ function ibup_plugin_redirect()
     if (get_option('ibup_plugin_redirect', false)) {
         delete_option('ibup_plugin_redirect');
         if (!isset($_GET['activate-multi'])) {
-            wp_redirect("admin.php?page=image-boss-setting");
+            wp_redirect("admin.php?page=imageboss-setting");
         }
     }
 }
