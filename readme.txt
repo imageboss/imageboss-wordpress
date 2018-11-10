@@ -1,9 +1,9 @@
 === ImageBoss WordPress Plugin ===
 Contributors: igorescobar
-Tags: cdn, images, compression, face detection, progressive scans, watermarking
+Tags: cdn, compression, smart cropping, watermarking
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
