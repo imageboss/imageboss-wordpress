@@ -3,7 +3,7 @@ Contributors: igorescobar
 Tags: cdn, compression, smart cropping, watermarking
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -22,6 +22,8 @@ Content aware image resizing, cropping, compression, cache and CDN. All web deve
 * Image CDN.
 * Image Filters.
 * Watermarking.
+
+Your WordPress Themes are now even more powerful and flexible.
 
 Caution: This plugin may cause some server side cache services to return non-cached content to all users.
 
