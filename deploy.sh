@@ -43,18 +43,18 @@ PLUGINSLUG="imageboss"
 CURRENTDIR=$(pwd)
 default_svnpath="/tmp/$PLUGINSLUG"
 default_svnurl="https://plugins.svn.wordpress.org/$PLUGINSLUG"
-default_svnuser="GaryJ"
-default_plugindir="$CURRENTDIR/$PLUGINSLUG"
+default_svnuser="igorescobar"
+default_plugindir="$CURRENTDIR"
 default_mainfile="$PLUGINSLUG.php"
 
-# echo "Q2. Your local plugin root directory (the Git repo)."
-# printf "($default_plugindir): "
-# read -e  input
-# input="${input%/}" # Strip trailing slash
-# PLUGINDIR="${input:-$default_plugindir}" # Populate with default if empty
-# echo
+echo "Q2. Your local plugin root directory (the Git repo)."
+printf "($default_plugindir): "
+read -e  input
+input="${input%/}" # Strip trailing slash
+PLUGINDIR="${input:-$default_plugindir}" # Populate with default if empty
+echo
 
-PLUGINDIR=$(pwd)
+PLUGINDIR="$CURRENTDIR"
 
 # Check directory exists.
 if [ ! -d "$PLUGINDIR" ]; then
@@ -62,10 +62,10 @@ if [ ! -d "$PLUGINDIR" ]; then
   exit 1;
 fi
 
-# printf "Q3. Name of the main plugin file ($default_mainfile): "
-# read -e input
-# MAINFILE="${input:-$default_mainfile}" # Populate with default if empty
-# echo
+printf "Q3. Name of the main plugin file ($default_mainfile): "
+read -e input
+MAINFILE="${input:-$default_mainfile}" # Populate with default if empty
+echo
 
 MAINFILE="imageboss.php"
 # Check main plugin file exists.
@@ -166,6 +166,9 @@ Thumbs.db
 .github/*
 .git
 .gitattributes
+*.yml
+*.md
+*.sh
 .gitignore" "$SVNPATH/trunk/"
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"
