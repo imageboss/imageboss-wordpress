@@ -19,6 +19,7 @@ function ibup_register_menu_page()
     'imageboss-setting',
     'image_boss_settings'
   );
+
   add_submenu_page(
     '',
     'Welcome to ImageBoss',
