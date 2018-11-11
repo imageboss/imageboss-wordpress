@@ -5,6 +5,12 @@
 Official Wordpress plugin for ImageBoss.
 [https://imageboss.me/](https://imageboss.me/)
 
+# Plugin Features
+* Compression, CDN and progressive scans to all your images AUTOMATICALLY.
+* Theme Images Supported
+* Post Images Supported
+* Helper for inserting images into your posts using ImageBoss Functionalities.
+
 This plugin allows you to automatically serve all your image files via ImageBoss service which will give you:
 * Content Aware Image Cropping.
 * Up to 60% smaller images.
@@ -19,7 +25,7 @@ This plugin allows you to automatically serve all your image files via ImageBoss
 ## Manual Installation
 Installing "ImageBoss WordPress Plugin" can be done either by searching for "ImageBoss" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
-1. Download the plugin via https://wordpress.org/plugins/imageboss
+1. Download the plugin via httpvs://wordpress.org/plugins/imageboss
 2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
@@ -33,7 +39,7 @@ When you install the plugin this is disable by default. Go to your Dashboard -> 
 ### Adding Images With Custom Configuration
 [![Features](./assets/screenshot-4.png)](https://imageboss.me)
 
-### Using ImageBoss on your theme
+### Using ImageBoss on your Themes & Blog Posts (Using Text Mode)
 ```html
 <img
   src="http://www.yourwordpresssite.com/wp-content/uploads/2016/05/01.jpg"

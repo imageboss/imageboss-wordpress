@@ -1,101 +1,100 @@
 <?php
 
 add_filter('attachment_fields_to_edit', 'ibup_add_media_custom_field', 10, 2);
-function ibup_add_media_custom_field($form_fields, $post)
-{
-    $form_fields['imageBoss-configuration'] = array(
-        'label' => 'ImageBoss Configuration',
-    );
+function ibup_add_media_custom_field($form_fields, $post) {
+  $form_fields['imageBoss-configuration'] = array(
+      'label' => 'ImageBoss Configuration',
+  );
 
-    $form_fields['operation'] = array(
-        'label' => 'Operation',
-        'input' => 'html',
-    );
+  $form_fields['operation'] = array(
+      'label' => 'Operation',
+      'input' => 'html',
+  );
 
-    $form_fields['operation']['html'] = '<select name="operation" id="operation">';
-    $form_fields['operation']['html'] .= '<option value="">Select Operation</option>';
-    $form_fields['operation']['html'] .= '<option value="cdn">cdn</option>';
-    $form_fields['operation']['html'] .= '<option value="cover">cover</option>';
-    $form_fields['operation']['html'] .= '<option value="width">width</option>';
-    $form_fields['operation']['html'] .= '<option value="height">height</option>';
-    $form_fields['operation']['html'] .= '</select>';
+  $form_fields['operation']['html'] = '<select name="operation" id="operation">';
+  $form_fields['operation']['html'] .= '<option value="">Select Operation</option>';
+  $form_fields['operation']['html'] .= '<option value="cdn">cdn</option>';
+  $form_fields['operation']['html'] .= '<option value="cover">cover</option>';
+  $form_fields['operation']['html'] .= '<option value="width">width</option>';
+  $form_fields['operation']['html'] .= '<option value="height">height</option>';
+  $form_fields['operation']['html'] .= '</select>';
 
-    $imageboss_cover_mode = get_post_meta($post->ID, 'imageboss-cover-mode', true);
-    $form_fields['imageboss-cover-mode'] = array(
-        'label' => __('Cover Mode'),
-        'input' => 'hidden',
-    );
+  $imageboss_cover_mode = get_post_meta($post->ID, 'imageboss-cover-mode', true);
+  $form_fields['imageboss-cover-mode'] = array(
+      'label' => __('Cover Mode'),
+      'input' => 'hidden',
+  );
 
-    $form_fields['cover_mode'] = array(
-        'label' => '',
-        'input' => 'html',
-    );
+  $form_fields['cover_mode'] = array(
+      'label' => '',
+      'input' => 'html',
+  );
 
-    $form_fields['cover_mode']['html'] = '<select id="blue" style="display:none;" name="cover_mode">';
-    $form_fields['cover_mode']['html'] .= '<option value="">Select Cover Modes</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="center">center</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="smart">smart</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="attention">attention</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="entropy">entropy</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="face">face</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="north">north</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="northeast">northeast</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="east">east</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="southeast">southeast</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="south">south</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="southwest">southwest</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="west">west</option>';
-    $form_fields['cover_mode']['html'] .= '<option value="northwest">northwest</option>';
-    $form_fields['cover_mode']['html'] .= '</select></div>';
+  $form_fields['cover_mode']['html'] = '<select id="blue" style="display:none;" name="cover_mode">';
+  $form_fields['cover_mode']['html'] .= '<option value="">Select Cover Modes</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="center">center</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="smart">smart</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="attention">attention</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="entropy">entropy</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="face">face</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="north">north</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="northeast">northeast</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="east">east</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="southeast">southeast</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="south">south</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="southwest">southwest</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="west">west</option>';
+  $form_fields['cover_mode']['html'] .= '<option value="northwest">northwest</option>';
+  $form_fields['cover_mode']['html'] .= '</select></div>';
 
-    $imageboss_width = get_post_meta($post->ID, 'imageboss-width', true);
-    $form_fields['imageboss-width'] = array(
-        'label' => __('Width'),
-        'input' => 'text',
-        'value' => '',
-    );
+  $imageboss_width = get_post_meta($post->ID, 'imageboss-width', true);
+  $form_fields['imageboss-width'] = array(
+      'label' => __('Width'),
+      'input' => 'text',
+      'value' => '',
+  );
 
-    $imageboss_height = get_post_meta($post->ID, 'imageboss-height', true);
-    $form_fields['imageboss-height'] = array(
-        'label' => __('Height'),
-        'input' => 'text',
-        'value' => '',
-    );
-    $imageboss_opt = get_post_meta($post->ID, 'imageboss-operation', true);
-    $form_fields['imageboss-operation'] = array(
-        'label' => __('Operation'),
-        'input' => 'hidden',
-        'value' => '',
-    );
-    $imageboss_options = get_post_meta($post->ID, 'imageboss-options', true);
-    $form_fields['imageboss-options'] = array(
-        'label' => __('Options'),
-        'input' => 'text',
-        'value' => '',
-    );
-    return $form_fields;
+  $imageboss_height = get_post_meta($post->ID, 'imageboss-height', true);
+  $form_fields['imageboss-height'] = array(
+      'label' => __('Height'),
+      'input' => 'text',
+      'value' => '',
+  );
+  $imageboss_opt = get_post_meta($post->ID, 'imageboss-operation', true);
+  $form_fields['imageboss-operation'] = array(
+      'label' => __('Operation'),
+      'input' => 'hidden',
+      'value' => '',
+  );
+  $imageboss_options = get_post_meta($post->ID, 'imageboss-options', true);
+  $form_fields['imageboss-options'] = array(
+      'label' => __('Options'),
+      'input' => 'text',
+      'value' => '',
+  );
+  return $form_fields;
 }
 
 add_filter('attachment_fields_to_save', 'ibup_save_attachment_field', 10, 2);
 function ibup_save_attachment_field($post, $attachment)
 {
-    if (isset($attachment['imageboss-height'])) {
-        update_post_meta($post['ID'], 'imageboss-height', $attachment['imageboss-height']);
-    }
-    if (isset($attachment['imageboss-width'])) {
-        update_post_meta($post['ID'], 'imageboss-width', $attachment['imageboss-width']);
-    }
-    if (isset($attachment['imageboss-operation'])) {
-        update_post_meta($post['ID'], 'imageboss-operation', $attachment['imageboss-operation']);
-    }
-    if (isset($attachment['imageboss-cover-mode'])) {
-        update_post_meta($post['ID'], 'imageboss-cover-mode', $attachment['imageboss-cover-mode']);
-    }
-    if (isset($attachment['imageboss-options'])) {
-        update_post_meta($post['ID'], 'imageboss-options', $attachment['imageboss-options']);
-    }
+  if (isset($attachment['imageboss-height'])) {
+    update_post_meta($post['ID'], 'imageboss-height', $attachment['imageboss-height']);
+  }
+  if (isset($attachment['imageboss-width'])) {
+    update_post_meta($post['ID'], 'imageboss-width', $attachment['imageboss-width']);
+  }
+  if (isset($attachment['imageboss-operation'])) {
+    update_post_meta($post['ID'], 'imageboss-operation', $attachment['imageboss-operation']);
+  }
+  if (isset($attachment['imageboss-cover-mode'])) {
+    update_post_meta($post['ID'], 'imageboss-cover-mode', $attachment['imageboss-cover-mode']);
+  }
+  if (isset($attachment['imageboss-options'])) {
+    update_post_meta($post['ID'], 'imageboss-options', $attachment['imageboss-options']);
+  }
 
-    return $post;
+  return $post;
 }
 
 add_filter('image_send_to_editor', 'ibup_custom_html_template', 1, 8);

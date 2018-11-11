@@ -1,15 +1,21 @@
 === ImageBoss WordPress Plugin ===
 Contributors: igorescobar
-Tags: cdn, compression, smart cropping, watermarking
+Tags: cdn, compression, smart cropping, watermarking, images
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
 Content aware image resizing, cropping, compression, cache and CDN. All web development best practices, hassle free in one simple and powerful API.
 
 == Description ==
+
+# Plugin Features
+* Compression, CDN and progressive scans to all your images AUTOMATICALLY.
+* Theme Images Supported
+* Post Images Supported
+* Helper for inserting images into your posts using ImageBoss Functionalities.
 
 Content aware image resizing, cropping, compression, cache and CDN. All web development best practices, hassle free in one simple and powerful API.
 
