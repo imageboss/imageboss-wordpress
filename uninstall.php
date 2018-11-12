@@ -1,6 +1,6 @@
 <?php
 
-register_uninstall_hook(__FILE__, 'ibup_uninstall_plugin');
+register_uninstall_hook(IBUP_BASENAME, 'ibup_uninstall_plugin');
 
 function ibup_uninstall_plugin() {
   $prefix = 'ibup_';
