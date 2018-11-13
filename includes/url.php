@@ -44,7 +44,7 @@ function ibup_apply_imageboss_urls($the_content)
         $src = $img->getAttribute('src');
         $srcset = $img->getAttribute('srcset');
 
-        if (preg_match('/gravatar/', $src)) {
+        if (preg_match('/gravatar/', $src) && !preg_match('/^http/')) {
             continue;
         }
 
