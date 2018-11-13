@@ -3,7 +3,7 @@ Contributors: igorescobar
 Tags: cdn, compression, smart cropping, watermarking, images
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 

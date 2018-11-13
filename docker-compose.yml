@@ -21,9 +21,18 @@ services:
      restart: always
      volumes:
       - ./:/var/www/html/wp-content/plugins/imageboss
+      - ./local.ini:/usr/local/etc/php/conf.d/local.ini
      environment:
-       WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_USER: wordpress
-       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_ADDITIONAL_CONFIG: |
+        define('WP_MEMORY_LIMIT', '256M' );
+        define('WP_MAX_MEMORY_LIMIT', '512M' );
+        define('WP_UPLOAD_MAX_FILESIZE', '64M');
+        define('WP_POST_MAX_SIZE','64M');
+        define('WP_UPLOAD_MAX_SIZE','64M');
+
+
 volumes:
   db_data:
