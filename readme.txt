@@ -3,7 +3,7 @@ Contributors: igorescobar
 Tags: cdn, compression, smart cropping, watermarking, images
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -13,6 +13,7 @@ Content aware image resizing, cropping, compression, cache and CDN. All web deve
 
 # Plugin Features
 * Compression, CDN and progressive scans to all your images AUTOMATICALLY.
+* Retina Displays Support.
 * Theme Images Supported
 * Post Images Supported
 * Helper for inserting images into your posts using ImageBoss Functionalities.
