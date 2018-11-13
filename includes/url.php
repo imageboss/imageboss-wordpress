@@ -25,7 +25,7 @@ function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height
 }
 
 function ibup_apply_cdn($size) {
-  return 'https://img.imageboss.me/cdn/' . $size;
+  return 'https://img.imageboss.me/cdn/' . trim($size);
 }
 
 function ibup_apply_imageboss_urls($the_content)
