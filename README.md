@@ -53,6 +53,17 @@ When you install the plugin this is disable by default. Go to your Dashboard -> 
 ```
 We will render your image according to your params.
 
+### Generating a ImageBoss URL via PHP
+#### ibup_mount_imageboss_url($attachment_url, 'cover', 'attention', 500, $height, $options);
+```php
+echo ibup_mount_imageboss_url($attachment_url, 'cover', 'attention', 500, 500);
+```
+or
+
+```php
+echo ibup_mount_imageboss_url($attachment_url, 'cover', 'attention', 500, 500, 'blur:1');
+```
+
 ## Tested on
 WordPress
   - 4.9.x
