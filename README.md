@@ -7,6 +7,7 @@ Official Wordpress plugin for ImageBoss.
 
 # Plugin Features
 * Compression, CDN and progressive scans to all your images AUTOMATICALLY.
+* Retina Displays Support.
 * Theme Images Supported
 * Post Images Supported
 * Helper for inserting images into your posts using ImageBoss Functionalities.
