@@ -25,7 +25,7 @@ function ibup_add_imageboss_url() {
     var src = elm.attr('src');
     var newUrl = ibup_mountImageBossUrl(src, {
       operation: elm.attr('imageboss-operation'),
-      cover_mode: elm.attr('cover-mode'),
+      cover_mode: elm.attr('imageboss-cover-mode'),
       width: elm.attr('imageboss-width'),
       height: elm.attr('imageboss-height'),
       options: elm.attr('imageboss-options'),

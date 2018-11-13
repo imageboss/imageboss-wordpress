@@ -44,7 +44,7 @@ When you install the plugin this is disable by default. Go to your Dashboard -> 
 <img
   src="http://www.yourwordpresssite.com/wp-content/uploads/2016/05/01.jpg"
   imageboss-operation="cover"
-  cover-mode="smart"
+  imageboss-cover-mode="smart"
   imageboss-width="500"
   imageboss-height="500"
   imageboss-options=""

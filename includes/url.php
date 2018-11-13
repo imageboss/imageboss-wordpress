@@ -49,7 +49,7 @@ function ibup_apply_imageboss_urls($the_content)
         }
 
         $operation  = $img->getAttribute('imageboss-operation');
-        $cover_mode = $img->getAttribute('cover-mode');
+        $cover_mode = $img->getAttribute('imageboss-cover-mode');
         $width      = $img->getAttribute('imageboss-width');
         $height     = $img->getAttribute('imageboss-height');
         $options    = $img->getAttribute('imageboss-options');
