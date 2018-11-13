@@ -69,7 +69,7 @@ function ibup_apply_imageboss_urls($the_content)
       $img->setAttribute('srcset', implode(',', $sizes));
 
     // add supoort for retina displays
-    } else if (!$srcset && $operation) {
+    } else if ($operation) {
       $new_src_2x = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, ibup_add_option($options, 'dpr:2'));
       $new_src_3x = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, ibup_add_option($options, 'dpr:3'));
 
