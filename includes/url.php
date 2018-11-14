@@ -44,6 +44,9 @@ function ibup_apply_imageboss_urls($the_content)
   $post->loadHTML('<?xml encoding="utf-8">' . $the_content);
   // Look up for all the <img> tags.
   $imgs = $post->getElementsByTagName('img');
+  $body = $post->getElementsByTagName('body')[0];
+
+  $has_woocommerce = preg_match('/woocommerce/', $body->getAttribute('class'));
 
   // Iteration time
   foreach ($imgs as $img) {
@@ -63,17 +66,32 @@ function ibup_apply_imageboss_urls($the_content)
     $new_src = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options);
     $img->setAttribute('src', $new_src);
 
+    if ($has_woocommerce && $img->getAttribute('data-src')) {
+      $img->setAttribute('data-src', $new_src);
+    }
+
     if ($srcset && !$operation) {
       $sizes = explode(',', $srcset);
       $sizes = array_map('ibup_apply_cdn', $sizes);
-      $img->setAttribute('srcset', implode(',', $sizes));
+      $new_srcset = implode(',', $sizes);
+      $img->setAttribute('srcset', $new_srcset);
+
+      if ($has_woocommerce && $img->getAttribute('data-srcset')) {
+        $img->setAttribute('data-srcset', $new_srcset);
+      }
 
     // add supoort for retina displays
     } else if ($operation) {
       $new_src_2x = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, ibup_add_option($options, 'dpr:2'));
       $new_src_3x = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, ibup_add_option($options, 'dpr:3'));
+      $new_srcset = "${new_src}, ${new_src_2x} 2x, ${new_src_3x} 3x";
 
-      $img->setAttribute('srcset', "${new_src}, ${new_src_2x} 2x, ${new_src_3x} 3x");
+      $img->setAttribute('srcset', $new_srcset);
+
+      if ($has_woocommerce && $img->getAttribute('data-srcset')) {
+        $img->setAttribute('data-srcset', $new_srcset);
+      }
+
     }
   }
 
