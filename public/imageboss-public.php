@@ -17,7 +17,7 @@ function ibup_buffer_end() {
 
 add_filter('wp_get_attachment_url', 'ibup_replace_image_url', 100);
 function ibup_replace_image_url($url){
-  if (!is_admin() && !ibup_is_imageboss_url($url) && preg_match('/\.(jpg|jpeg|gif|png|webp)$/i', $url)) {
+  if (!is_admin() && IBUP_AUTO_CDN && preg_match('/\.(jpg|jpeg|gif|png|webp)$/i', $url)) {
       return ibup_apply_cdn($url);
   }
 

@@ -13,6 +13,11 @@ function ibup_is_imageboss_url($url) {
 
 function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options) {
 
+  // do nothing if the user has the option disabled
+  if (!$operation && !IBUP_AUTO_CDN) {
+    return $src;
+  }
+
   $template = '/:operation/:options/';
 
   if ($operation === 'cover') {
@@ -75,7 +80,7 @@ function ibup_apply_imageboss_urls($the_content)
     $new_src = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options);
     $img->setAttribute('src', $new_src);
 
-    if ($srcset && !$operation) {
+    if ($srcset && !$operation && IBUP_AUTO_CDN) {
       $sizes = explode(',', $srcset);
       $sizes = array_map('ibup_apply_cdn', $sizes);
       $new_srcset = implode(',', $sizes);
