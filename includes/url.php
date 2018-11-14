@@ -1,8 +1,18 @@
 <?php
 
-function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options)
-{
-  $serviceUrl = 'https://img.imageboss.me';
+function ibup_get_original_url($url) {
+  $url_sections = preg_split('/(https?:\/\/)/', $url, 0, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+  $url_sections = array_chunk($url_sections, 2);
+
+  return join(end($url_sections), '');
+}
+
+function ibup_is_imageboss_url($url) {
+    return preg_match('/imageboss.me/', $url);
+}
+
+function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options) {
+
   $template = '/:operation/:options/';
 
   if ($operation === 'cover') {
@@ -13,6 +23,8 @@ function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height
     $template = '/:operation/:height/:options/';
   }
 
+  $src = ibup_get_original_url($src);
+
   $finalUrl = str_replace(':operation', $operation ?: 'cdn', $template);
   $finalUrl = str_replace(':cover_mode', $cover_mode, $finalUrl);
   $finalUrl = str_replace(':width', $width, $finalUrl);
@@ -21,11 +33,11 @@ function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height
   $finalUrl = preg_replace('/\/\//', '/', $finalUrl);
   $finalUrl = preg_replace('/:\//', '/', $finalUrl);
 
-  return $serviceUrl . $finalUrl . $src;
+  return IBUP_API . $finalUrl . $src;
 }
 
 function ibup_apply_cdn($size) {
-  return 'https://img.imageboss.me/cdn/' . trim($size);
+  return IBUP_API . '/cdn/' . ibup_get_original_url(trim($size));
 }
 
 function ibup_add_option($options, $option) {
@@ -44,19 +56,16 @@ function ibup_apply_imageboss_urls($the_content)
   $post->loadHTML('<?xml encoding="utf-8">' . $the_content);
   // Look up for all the <img> tags.
   $imgs = $post->getElementsByTagName('img');
-  $body = $post->getElementsByTagName('body')->item(0);
-
-  $has_woocommerce = preg_match('/woocommerce/', $body->getAttribute('class'));
 
   // Iteration time
   foreach ($imgs as $img) {
     $src = $img->getAttribute('src');
-    $srcset = $img->getAttribute('srcset');
 
     if (preg_match('/gravatar/', $src) && !preg_match('/^http/')) {
       continue;
     }
 
+    $srcset     = $img->getAttribute('srcset');
     $operation  = $img->getAttribute('imageboss-operation');
     $cover_mode = $img->getAttribute('imageboss-cover-mode');
     $width      = $img->getAttribute('imageboss-width');
@@ -66,32 +75,19 @@ function ibup_apply_imageboss_urls($the_content)
     $new_src = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options);
     $img->setAttribute('src', $new_src);
 
-    if ($has_woocommerce && $img->getAttribute('data-src')) {
-      $img->setAttribute('data-src', $new_src);
-    }
-
     if ($srcset && !$operation) {
       $sizes = explode(',', $srcset);
       $sizes = array_map('ibup_apply_cdn', $sizes);
       $new_srcset = implode(',', $sizes);
       $img->setAttribute('srcset', $new_srcset);
 
-      if ($has_woocommerce && $img->getAttribute('data-srcset')) {
-        $img->setAttribute('data-srcset', $new_srcset);
-      }
-
-    // add supoort for retina displays
+    // add support for retina displays
     } else if ($operation) {
       $new_src_2x = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, ibup_add_option($options, 'dpr:2'));
       $new_src_3x = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, ibup_add_option($options, 'dpr:3'));
       $new_srcset = "${new_src}, ${new_src_2x} 2x, ${new_src_3x} 3x";
 
       $img->setAttribute('srcset', $new_srcset);
-
-      if ($has_woocommerce && $img->getAttribute('data-srcset')) {
-        $img->setAttribute('data-srcset', $new_srcset);
-      }
-
     }
   }
 
