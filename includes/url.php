@@ -44,7 +44,7 @@ function ibup_apply_imageboss_urls($the_content)
   $post->loadHTML('<?xml encoding="utf-8">' . $the_content);
   // Look up for all the <img> tags.
   $imgs = $post->getElementsByTagName('img');
-  $body = $post->getElementsByTagName('body')[0];
+  $body = $post->getElementsByTagName('body')->item(0);
 
   $has_woocommerce = preg_match('/woocommerce/', $body->getAttribute('class'));
 
