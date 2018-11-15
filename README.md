@@ -6,10 +6,11 @@ Official Wordpress plugin for ImageBoss.
 [https://imageboss.me/](https://imageboss.me/)
 
 # Plugin Features
+* WooCommerce Compatible.
 * Compression, CDN and progressive scans to all your images AUTOMATICALLY.
 * Retina Displays Support.
-* Theme Images Supported
-* Post Images Supported
+* Theme Images Supported.
+* Post Images Supported.
 * Helper for inserting images into your posts using ImageBoss Functionalities.
 
 This plugin allows you to automatically serve all your image files via ImageBoss service which will give you:
@@ -35,10 +36,10 @@ Installing "ImageBoss WordPress Plugin" can be done either by searching for "Ima
 ### Activating CDN features
 When you install the plugin this is disable by default. Go to your Dashboard -> ImageBoss -> Settings and activate.
 
-[![Settings](./assets/screenshot-2.png)](https://imageboss.me)
+[![Settings](./assets/screenshot-1.png)](https://imageboss.me)
 
 ### Adding Images With Custom Configuration
-[![Features](./assets/screenshot-4.png)](https://imageboss.me)
+[![Features](./assets/screenshot-3.png)](https://imageboss.me)
 
 ### Using ImageBoss on your Themes & Blog Posts (Using Text Mode)
 ```html
