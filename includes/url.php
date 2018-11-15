@@ -51,8 +51,7 @@ function ibup_add_option($options, $option) {
   return implode(',', $options);
 }
 
-function ibup_apply_imageboss_urls($the_content)
-{
+function ibup_apply_imageboss_urls($the_content) {
   error_reporting(0);
 
   // Create a new istance of DOMDocument
@@ -60,7 +59,9 @@ function ibup_apply_imageboss_urls($the_content)
   $post->recover = true;
 
   // Load $the_content as HTML
-  $post->loadHTML(mb_convert_encoding($the_content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+  $post->loadHTML('<?xml encoding="utf-8" ?>'. $the_content);
+  $post->removeChild($post->doctype);
+
   // Look up for all the <img> tags.
   $imgs = $post->getElementsByTagName('img');
 
@@ -98,5 +99,14 @@ function ibup_apply_imageboss_urls($the_content)
     }
   }
 
-  return $post->saveHTML();
+  $mock = new DOMDocument;
+  $body = $post->getElementsByTagName('html')->item(0);
+  foreach ($body->childNodes as $child) {
+    $mock->appendChild($mock->importNode($child, true));
+  }
+
+  $html = trim($mock->saveHTML());
+  $html = str_replace('<?xml encoding="utf-8" ?>', '', $html);
+
+  return $html;
 }
