@@ -57,8 +57,10 @@ function ibup_apply_imageboss_urls($the_content)
 
   // Create a new istance of DOMDocument
   $post = new DOMDocument();
+  $post->recover = true;
+
   // Load $the_content as HTML
-  $post->loadHTML('<?xml encoding="utf-8">' . $the_content);
+  $post->loadHTML(mb_convert_encoding($the_content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
   // Look up for all the <img> tags.
   $imgs = $post->getElementsByTagName('img');
 
@@ -66,7 +68,7 @@ function ibup_apply_imageboss_urls($the_content)
   foreach ($imgs as $img) {
     $src = $img->getAttribute('src');
 
-    if (preg_match('/gravatar/', $src) && !preg_match('/^http/')) {
+    if (preg_match('/gravatar/', $src) && !preg_match('/^http/', $src)) {
       continue;
     }
 
