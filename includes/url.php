@@ -20,16 +20,15 @@ function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height
 
   $template = '/:operation/:options/';
 
-  if ($operation === 'cover') {
+  if ($operation == 'cover') {
     $template = '/:operation::cover_mode/:widthx:height/:options/';
-  } else if ($operation === 'width') {
+  } else if ($operation == 'width') {
     $template = '/:operation/:width/:options/';
-  } else if ($operation === 'height') {
+  } else if ($operation == 'height') {
     $template = '/:operation/:height/:options/';
   }
 
   $src = ibup_get_original_url($src);
-
   $finalUrl = str_replace(':operation', $operation ?: 'cdn', $template);
   $finalUrl = str_replace(':cover_mode', $cover_mode, $finalUrl);
   $finalUrl = str_replace(':width', $width, $finalUrl);
@@ -52,42 +51,36 @@ function ibup_add_option($options, $option) {
 }
 
 function ibup_apply_imageboss_urls($the_content) {
-  $all_images_pattern = '/(<img[^>]*src=".+"[^>]*>)/';
+  $all_images_pattern = '#<img.*?\\/?>#';
   return preg_replace_callback($all_images_pattern, function($matches) {
     return ibup_process_image_fragment($matches[0]);
   }, $the_content);
 }
 
 function ibup_process_image_fragment($the_content) {
-  error_reporting(0);
-
-  $post = new DOMDocument();
-  $img_fragment = $post->createDocumentFragment();
-  $img_fragment->appendXML($the_content);
-
-  $img = $img_fragment->firstChild;
-
-  $src = $img->getAttribute('src');
+  $img = simplexml_load_string($the_content);
+  $src = $img['src'];
 
   if (preg_match('/gravatar/', $src) && !preg_match('/^http/', $src)) {
     return $the_content;
   }
 
-  $srcset     = $img->getAttribute('srcset');
-  $operation  = $img->getAttribute('imageboss-operation');
-  $cover_mode = $img->getAttribute('imageboss-cover-mode');
-  $width      = $img->getAttribute('imageboss-width');
-  $height     = $img->getAttribute('imageboss-height');
-  $options    = $img->getAttribute('imageboss-options');
+  $srcset     = $img['srcset'];
+  $operation  = $img['imageboss-operation'];
+  $cover_mode = $img['imageboss-cover-mode'];
+  $width      = $img['imageboss-width'];
+  $height     = $img['imageboss-height'];
+  $options    = $img['imageboss-options'];
 
   $new_src = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options);
-  $img->setAttribute('src', $new_src);
+
+  $img['src'] = $new_src;
 
   if ($srcset && !$operation && IBUP_AUTO_CDN) {
     $sizes = explode(',', $srcset);
     $sizes = array_map('ibup_apply_cdn', $sizes);
     $new_srcset = implode(',', $sizes);
-    $img->setAttribute('srcset', $new_srcset);
+    $img['srcset'] = $new_srcset;
 
   // add support for retina displays
   } else if ($operation) {
@@ -95,10 +88,9 @@ function ibup_process_image_fragment($the_content) {
     $new_src_3x = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, ibup_add_option($options, 'dpr:3'));
     $new_srcset = "${new_src}, ${new_src_2x} 2x, ${new_src_3x} 3x";
 
-    $img->setAttribute('srcset', $new_srcset);
+    $img['srcset'] = $new_srcset;
   }
 
-  $post->appendChild($img_fragment);
+  return str_replace('<?xml version="1.0"?>', '', $img->asXML());
 
-  return $post->saveHTML();
 }
