@@ -3,7 +3,7 @@ Contributors: igorescobar
 Tags: cdn, compression, smart cropping, watermarking, images
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.0.26
+Stable tag: 1.0.28
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -14,6 +14,7 @@ Content aware image resizing, cropping, compression, cache and CDN. All web deve
 # Plugin Features
 * WooCommerce Compatible.
 * Compression, CDN and progressive scans to all your images AUTOMATICALLY.
+* Free Bandwidth.
 * Retina Displays Support.
 * Theme Images Supported.
 * Post Images Supported.
@@ -39,6 +40,6 @@ Caution: This plugin may cause some server side cache services to return non-cac
 
 Installing "WordPress ImageBoss Plugin" can be done either by searching for "ImageBoss" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
-1. Download the plugin via https://github.com/imageboss/imageboss-wordpress
+1. Download the plugin via [WordPress.org Plugins](https://wordpress.org/plugins/imageboss)
 1. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 1. Activate the plugin through the 'Plugins' menu in WordPress
