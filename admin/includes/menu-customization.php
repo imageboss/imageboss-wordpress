@@ -8,7 +8,6 @@ function ibup_register_menu_page() {
     'manage_options',
     'imageboss',
     'image_boss_settings',
-    'dashicons-welcome-widgets-menus',
-    8
+    'dashicons-welcome-widgets-menus'
   );
 }
