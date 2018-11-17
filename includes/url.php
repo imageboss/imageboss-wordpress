@@ -61,7 +61,7 @@ function ibup_process_image_fragment($the_content) {
   $img = simplexml_load_string($the_content);
   $src = $img['src'];
 
-  if (preg_match('/gravatar/', $src) && !preg_match('/^http/', $src)) {
+  if (preg_match('/gravatar/', $src) || !preg_match('/^http/', $src)) {
     return $the_content;
   }
 
