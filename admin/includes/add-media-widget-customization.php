@@ -1,8 +1,8 @@
 <?php
 
 add_filter('attachment_fields_to_edit', 'ibup_add_media_custom_field', 10, 2);
-function ibup_add_media_custom_field($form_fields, $post)
-{
+function ibup_add_media_custom_field($form_fields, $post) {
+
   $form_fields['imageBoss-configuration'] = array(
     'label' => 'ImageBoss Configuration',
   );
@@ -20,7 +20,6 @@ function ibup_add_media_custom_field($form_fields, $post)
   $form_fields['operation']['html'] .= '<option value="height">height</option>';
   $form_fields['operation']['html'] .= '</select>';
 
-  $imageboss_cover_mode = get_post_meta($post->ID, 'imageboss-cover-mode', true);
   $form_fields['imageboss-cover-mode'] = array(
     'label' => __('Cover Mode'),
     'input' => 'hidden',
@@ -31,7 +30,7 @@ function ibup_add_media_custom_field($form_fields, $post)
     'input' => 'html',
   );
 
-  $form_fields['cover_mode']['html'] = '<select id="blue" style="display:none;" name="cover_mode">';
+  $form_fields['cover_mode']['html'] = '<select id="cover_mode" name="cover_mode">';
   $form_fields['cover_mode']['html'] .= '<option value="">Select Cover Modes</option>';
   $form_fields['cover_mode']['html'] .= '<option value="center">center</option>';
   $form_fields['cover_mode']['html'] .= '<option value="smart">smart</option>';
@@ -48,37 +47,35 @@ function ibup_add_media_custom_field($form_fields, $post)
   $form_fields['cover_mode']['html'] .= '<option value="northwest">northwest</option>';
   $form_fields['cover_mode']['html'] .= '</select></div>';
 
-  $imageboss_width = get_post_meta($post->ID, 'imageboss-width', true);
   $form_fields['imageboss-width'] = array(
     'label' => __('Width'),
     'input' => 'text',
     'value' => '',
   );
 
-  $imageboss_height = get_post_meta($post->ID, 'imageboss-height', true);
   $form_fields['imageboss-height'] = array(
     'label' => __('Height'),
     'input' => 'text',
     'value' => '',
   );
-  $imageboss_opt = get_post_meta($post->ID, 'imageboss-operation', true);
+
   $form_fields['imageboss-operation'] = array(
     'label' => __('Operation'),
     'input' => 'hidden',
     'value' => '',
   );
-  $imageboss_options = get_post_meta($post->ID, 'imageboss-options', true);
+
   $form_fields['imageboss-options'] = array(
     'label' => __('Options'),
     'input' => 'text',
     'value' => '',
   );
+
   return $form_fields;
 }
 
 add_filter('attachment_fields_to_save', 'ibup_save_attachment_field', 10, 2);
-function ibup_save_attachment_field($post, $attachment)
-{
+function ibup_save_attachment_field($post, $attachment) {
   if (isset($attachment['imageboss-height'])) {
     update_post_meta($post['ID'], 'imageboss-height', $attachment['imageboss-height']);
   }
@@ -99,10 +96,7 @@ function ibup_save_attachment_field($post, $attachment)
 }
 
 add_filter('image_send_to_editor', 'ibup_custom_html_template', 1, 8);
-
-function ibup_custom_html_template($html, $id, $caption, $title, $align, $url, $size, $alt)
-{
-
+function ibup_custom_html_template($html, $id, $caption, $title, $align, $url, $size, $alt) {
   list($img_src, $width, $height) = image_downsize($id, $size);
   $original_image = wp_get_attachment_image_src($id, 'full');
 
@@ -145,8 +139,7 @@ function ibup_custom_html_template($html, $id, $caption, $title, $align, $url, $
 }
 
 add_filter('tiny_mce_before_init', 'ibup_override_mce_options');
-function ibup_override_mce_options($initArray)
-{
+function ibup_override_mce_options($initArray) {
   $opts = '*[*]';
   $initArray['valid_elements'] = $opts;
   $initArray['extended_valid_elements'] = $opts;
@@ -154,8 +147,7 @@ function ibup_override_mce_options($initArray)
 }
 
 add_action('media_buttons', 'ibup_reset_attribute_of_images');
-function ibup_reset_attribute_of_images()
-{
+function ibup_reset_attribute_of_images() {
   $query_images_args = array(
     'post_type' => 'attachment',
     'post_mime_type' => 'image',
