@@ -46,9 +46,10 @@ function image_boss_settings() {
   <div>
     <h3>Useful Links</h3>
     <a class='button action' target='_blank' href='https://imageboss.me/pricing'>Create Account</a>
+    <a class='button action' target='_blank' href='https://imageboss.me/dashboard'>ImageBoss Dashboard</a>
     <a class='button action' target='_blank' href='https://imageboss.me/docs'>ImageBoss Docs</a>
     <a class='button action' target='_blank' href='https://github.com/imageboss/imageboss-wordpress'>Plugin Documentation</a>
-    <a class='button action' target='_blank' href='https://imageboss.me/dashboard'>ImageBoss Dashboard</a>
+    <a class='button action' target='_blank' href='https://github.com/imageboss/imageboss-wordpress/issues'>Report a Bug</a>
   </div>
 <?php
 }
