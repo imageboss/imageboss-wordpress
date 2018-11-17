@@ -1,40 +1,42 @@
-var ht;
+(function($) {
+  var showOrHideFields = function () {
+    var attachment;
 
-jQuery(document).on("click", ".attachment", function(){
-    ht = jQuery(this).attr("data-id");
-});
+    $('.compat-field-cover_mode').hide();
+    $('.compat-field-imageboss-width').hide();
+    $('.compat-field-imageboss-height').hide()
 
-jQuery(document).on("change", "#operation", function(){
-    var selectedText2 =  jQuery("#operation option:selected").text();
-
-    jQuery('input[name="attachments['+ht+'][imageboss-operation]"]').val(selectedText2).trigger('change');
-
-    value = jQuery(this).val().split('-')[0]; // extracting the color prefix from selected value
+    var value = $('#operation').val().split('-')[0];
 
     if (value == 'cover') {
-        jQuery('#blue').show(); //showing div having id"blue"
-        jQuery('.compat-field-imageboss-width').show();
-        jQuery('.compat-field-imageboss-height').show();
+      $('.compat-field-cover_mode').show();
+      $('.compat-field-imageboss-width').show();
+      $('.compat-field-imageboss-height').show();
     } else if (value == 'width') {
-        jQuery('.compat-field-imageboss-width').show();
-        jQuery('.compat-field-imageboss-height').hide();
-        jQuery('#blue').hide();
+      $('.compat-field-imageboss-width').show();
     } else if (value == 'height') {
-        jQuery('.compat-field-imageboss-height').show();
-        jQuery('.compat-field-imageboss-width').hide();
-        jQuery('#blue').hide();
-    } else {
-        jQuery('#blue').hide(); //hide the div having id "blue"
-        jQuery('.compat-field-imageboss-width').hide();
-        jQuery('.compat-field-imageboss-height').hide();
+      $('.compat-field-imageboss-height').show();
     }
-});
+  };
 
-jQuery(document).on("keyup", ".compat-item input", function(){
-    jQuery(this).trigger('change');
-});
+  $(document).on("click", ".attachment", function () {
+    showOrHideFields();
+    attachment = $(this).attr("data-id");
+  });
 
-jQuery(document).on("change", "#blue", function(){
-    var selectedText2 =  jQuery("#blue option:selected").text();
-    jQuery('input[name="attachments['+ht+'][imageboss-cover-mode]"]').val(selectedText2).trigger('change');
-});
+  $(document).on("change", "#operation", function () {
+    showOrHideFields();
+
+    var selected = $("#operation option:selected").val();
+    $('input[name="attachments[' + attachment + '][imageboss-operation]"]').val(selected).trigger('change');
+  });
+
+  $(document).on("keyup", ".compat-item input", function () {
+    $(this).trigger('change');
+  });
+
+  $(document).on("change", "#cover_mode", function () {
+    var selected = $("#cover_mode option:selected").val();
+    $('input[name="attachments[' + attachment + '][imageboss-cover-mode]"]').val(selected).trigger('change');
+  });
+})(jQuery);
