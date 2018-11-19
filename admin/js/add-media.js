@@ -19,6 +19,16 @@
     }
   };
 
+  // do not show ImageBoss fields on media edit mode
+  $(document).on("click", ".mode-edit.media-frame", function () {
+    $('.compat-field-imageBoss-configuration').hide();
+    $('.compat-field-cover_mode').hide();
+    $('.compat-field-imageboss-width').hide();
+    $('.compat-field-imageboss-height').hide();
+    $('.compat-field-operation').hide();
+    $('.compat-field-imageboss-options').hide();
+  });
+
   $(document).on("click", ".attachment", function () {
     showOrHideFields();
     attachment = $(this).attr("data-id");
