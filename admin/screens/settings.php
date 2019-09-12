@@ -36,6 +36,18 @@ function image_boss_settings() {
         </td>
         <td><label for="ibup_auto_imageboss_cdn">Automatically use ImageBoss' CDN for all my images.</label></td>
       </tr>
+      <tr>
+        <td style="width: 20px;">
+          <input
+            type="checkbox"
+            id="ibup_auto_imageboss_thumbnails"
+            name="ibup_auto_imageboss_thumbnails"
+            value="yes"
+            <?php echo get_option('ibup_auto_imageboss_thumbnails') ? 'checked' : '' ?>
+          />
+        </td>
+        <td><label for="ibup_auto_imageboss_thumbnails">Use ImageBoss to generate thumbnails.</label></td>
+      </tr>
     </table>
     <br />
 

@@ -1,6 +1,9 @@
 <?php
 
 function ibup_get_original_url($url) {
+  if (!$url) {
+    return;
+  }
   $url_sections = preg_split('/(https?:\/\/)/', $url, 0, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
   $url_sections = array_chunk($url_sections, 2);
 
@@ -11,7 +14,7 @@ function ibup_is_imageboss_url($url) {
     return preg_match('/imageboss.me/', $url);
 }
 
-function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options) {
+function ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options = '') {
 
   // do nothing if the user has the option disabled
   if (!$operation && !IBUP_AUTO_CDN) {
@@ -74,13 +77,15 @@ function ibup_process_image_fragment($the_content) {
 
   $new_src = ibup_mount_imageboss_url($src, $operation, $cover_mode, $width, $height, $options);
 
-  $img['src'] = $new_src;
+  if (!IBUP_AUTO_THUMBNAILS && !ibup_is_imageboss_url($src)) {
+    $img['src'] = $new_src;
+  }
 
   if ($srcset && !$operation && IBUP_AUTO_CDN) {
     $sizes = explode(',', $srcset);
     $sizes = array_map('ibup_apply_cdn', $sizes);
     $new_srcset = implode(',', $sizes);
-    $img['srcset'] = $new_srcset;
+    // $img['srcset'] = $new_srcset;
 
   // add support for retina displays
   } else if ($operation) {

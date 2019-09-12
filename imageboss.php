@@ -12,6 +12,7 @@ License URI: https://opensource.org/licenses/MIT
 define('IBUP_API', 'https://img.imageboss.me');
 define('IBUP_BASENAME', plugin_basename(__FILE__));
 define('IBUP_AUTO_CDN', get_option('ibup_auto_imageboss_cdn'));
+define('IBUP_AUTO_THUMBNAILS', get_option('ibup_auto_imageboss_thumbnails'));
 
 require plugin_dir_path(__FILE__) . '/includes/url.php';
 require plugin_dir_path(__FILE__) . '/admin/imageboss-admin.php';
