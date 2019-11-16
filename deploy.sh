@@ -159,6 +159,7 @@ echo
 echo "Creating local copy of SVN repo trunk..."
 svn checkout $SVNURL $SVNPATH --depth immediates
 svn update --quiet $SVNPATH/trunk --set-depth infinity
+# svn delete $SVNPATH/trunk/*
 
 echo "Ignoring GitHub specific files"
 svn propset svn:ignore "README.md
@@ -202,7 +203,7 @@ echo
 echo "Moving assets."
 # Make the directory if it doesn't already exist
 mkdir -p $SVNPATH/assets/
-mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
+mv assets/* $SVNPATH/assets/
 svn add --force $SVNPATH/assets/
 svn delete --force $SVNPATH/trunk/assets
 
