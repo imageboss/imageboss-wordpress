@@ -1,0 +1,12 @@
+README.md
+Thumbs.db
+.github/*
+.git
+.gitattributes
+*.yml
+*.md
+*.sh
+local.ini
+uploads/*
+*.ini
+.gitignore
