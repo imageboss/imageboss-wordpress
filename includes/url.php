@@ -43,17 +43,17 @@ function ibup_process_image_fragment($the_content) {
   $transparent_src  = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
   $srcset           = $img['srcset'];
 
-  $img['imageboss-src'] = $src;
+  $img['data-imageboss-src'] = $src;
 
   // disable DPR while the library does not fully support srcset
-  if (!$img['imageboss-dpr']) {
-    $img['imageboss-dpr'] = "false";
+  if (!$img['data-imageboss-dpr']) {
+    $img['data-imageboss-dpr'] = "false";
   }
 
   $img['src'] = $transparent_src;
 
   if ($srcset) {
-    $img['imageboss-src'] = ibup_get_biggest_size($srcset);
+    $img['data-imageboss-src'] = ibup_get_biggest_size($srcset);
   }
 
   return str_replace('<?xml version="1.0"?>', '', $img->asXML());

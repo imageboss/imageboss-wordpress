@@ -6,6 +6,6 @@ function ibup_assets_js() {
 
     echo '
         <script type="text/javascript">window.ImageBoss = {authorisedHosts: ' . $hosts . '};</script>
-        <script src="//cdn.jsdelivr.net/gh/imageboss/imageboss-web@latest/dist/imageboss.min.js" type="text/javascript"></script>
+        <script src="//cdn.jsdelivr.net/gh/imageboss/imageboss-web@2.0.0/dist/imageboss.min.js" type="text/javascript"></script>
     ';
 }
