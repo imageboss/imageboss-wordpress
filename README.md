@@ -31,41 +31,31 @@ Installing "ImageBoss WordPress Plugin" can be done either by searching for "Ima
 1. Download the plugin via [WordPress.org Plugins](https://wordpress.org/plugins/imageboss)
 2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 3. Activate the plugin through the 'Plugins' menu in WordPress
+4. If you have any plugin like WP-Cache, please, clean up your cache after the installation or any updates with your templates.
 
-## Features
+## Setting Up
 
-### Activating CDN features
-When you install the plugin this is disable by default. Go to your Dashboard -> ImageBoss -> Settings and activate.
+### Authorise your traffic
+When you install go to the settings menu: Dashboard -> ImageBoss -> Settings. Make sure you follow all the steps.
 
 [![Settings](./assets/screenshot-1.png)](https://imageboss.me)
 
-### Adding Images With Custom Configuration
-[![Features](./assets/screenshot-3.png)](https://imageboss.me)
+## Usage
 
-### Using ImageBoss on your Themes & Blog Posts (Using Text Mode)
-```html
-<img
-  src="http://www.yourwordpresssite.com/wp-content/uploads/2016/05/01.jpg"
-  imageboss-operation="cover"
-  imageboss-cover-mode="smart"
-  imageboss-width="500"
-  imageboss-height="500"
-  imageboss-options=""
-/>
-```
-We will render your image according to your params.
+### Default Behaviour
+When you activated and configured your plugin. We will automatically handle all your images and apply CDN, Compression, Retina Displays Detection, WebP Support, Progressive scans etc.
 
-### Generating a ImageBoss URL via PHP
-#### ibup_mount_imageboss_url($attachment_url, 'cover', 'attention', 500, $height, $options);
-```php
-echo ibup_mount_imageboss_url($attachment_url, 'cover', 'attention', 500, 500);
-```
-or
+### Customizing output
+If you want, you can edit your `img` tag and add ImageBoss specific attributes to customize the output of your images:
+[![Customizing Image Output](./assets/screenshot-2.png)](https://imageboss.me)
 
-```php
-echo ibup_mount_imageboss_url($attachment_url, 'cover', 'attention', 500, 500, 'blur:1');
-```
+You can do the same with on your themes:
+[![Customizing Image Output](./assets/screenshot-3.png)](https://imageboss.me)
+
+Full list of options available can be found <a href="https://github.com/imageboss/imageboss-web#usage">here</a>.
 
 ## Tested on
 WordPress
   - 4.9.x
+  - 5.2.x
+  - 5.3.x

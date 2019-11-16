@@ -21,7 +21,7 @@ services:
      restart: always
      volumes:
       - ./:/var/www/html/wp-content/plugins/imageboss
-      - ./uploads:/var/www/html/wp-content/uploads
+      - ./wp-content:/var/www/html/wp-content
       - ./local.ini:/usr/local/etc/php/conf.d/local.ini
      environment:
       WORDPRESS_DB_HOST: db:3306

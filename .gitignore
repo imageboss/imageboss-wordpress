@@ -1,2 +1,5 @@
 .DS_Store
 imageboss-plugin/README.md
+uploads/*
+wp-content/*
+*.zip

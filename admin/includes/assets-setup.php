@@ -1,15 +1,11 @@
 <?php
 
-add_action('admin_enqueue_scripts', 'ibup_load_assets');
-function ibup_load_assets() {
-    wp_enqueue_script('imageboss', plugin_dir_url(__FILE__) . '../js/url.js');
-    wp_enqueue_script('imageboss', plugin_dir_url(__FILE__) . '../js/add-media.js');
-    wp_enqueue_style('imageboss', plugin_dir_url(__FILE__) . '../css/admin_style.css');
-}
+add_action('wp_footer', 'ibup_assets_js');
+function ibup_assets_js() {
+    $hosts = json_encode(ibup_get_authorised_hosts());
 
-add_action('admin_footer', 'ibup_admin_assets_js');
-function ibup_admin_assets_js() {
-    echo '<script type="text/javascript" src="' . plugin_dir_url(__FILE__) . '../js/tinymce-preview.js' . '"></script>';
-    echo '<script type="text/javascript" src="' . plugin_dir_url(__FILE__) . '../js/add-media.js' . '"></script>';
-    echo '<script type="text/javascript">window.AUTO_IMAGEBOSS_CDN = "' . get_option('ibup_auto_imageboss_cdn') . '";</script>';
+    echo '
+        <script type="text/javascript">window.ImageBoss = {authorisedHosts: ' . $hosts . '};</script>
+        <script src="//cdn.jsdelivr.net/gh/imageboss/imageboss-web@latest/dist/imageboss.min.js" type="text/javascript"></script>
+    ';
 }

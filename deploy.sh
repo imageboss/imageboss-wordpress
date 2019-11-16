@@ -170,6 +170,7 @@ Thumbs.db
 *.md
 *.sh
 local.ini
+uploads/*
 .gitignore" "$SVNPATH/trunk/"
 
 echo "Exporting the HEAD of master from git to the trunk of SVN"

@@ -2,8 +2,8 @@
 Contributors: igorescobar
 Tags: cdn, compression, smart cropping, watermarking, images
 Requires at least: 3.0
-Tested up to: 4.9
-Stable tag: 1.0.28
+Tested up to: 5.3.0
+Stable tag: 2.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -43,3 +43,5 @@ Installing "WordPress ImageBoss Plugin" can be done either by searching for "Ima
 1. Download the plugin via [WordPress.org Plugins](https://wordpress.org/plugins/imageboss)
 1. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Make sure you clean your cache if you have any caching-related plugins installed (ex: WP-Cache).
+

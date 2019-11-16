@@ -6,39 +6,26 @@ function image_boss_settings() {
   <div class="wrap">
     <h2>ImageBoss</h2>
 
-    <div class="notice">
-      <h4>Caution</h4>
-      <p>
-        In order to identify your traffic you need to add the host of your images on your <a target='_blank' href='https://imageboss.me/dashboard'>ImageBoss Dashboard</a>.
-        It usually is: <strong><?= site_url(); ?></strong>.
-      </p>
-    </div>
-
     <?php if (isset($_GET['settings-updated'])) { ?>
       <div class='updated'><p>You have successfully saved the settings.</p></div>
     <?php } ?>
 
-    <br />
-    <strong>Options</strong>
+    <h3>Step 1</h3>
+    <p>Create your <a href="https://imageboss.me/" target="_blank">ImageBoss Account</a>.</p>
 
+    <h3>Step 2</h3>
+    <p>
+      In order to identify your traffic you need to add the host of the images you want to optimize on <a target='_blank' href='https://imageboss.me/dashboard'>ImageBoss Dashboard</a>.
+    </p>
+
+    <h3>Step 3</h3>
+    <p>Comma separated list of your image hosts you want to connect with this plugin</p>
     <?php settings_fields('imageboss-settings-group'); ?>
-
-    <table class="form-table">
-      <tr>
-        <td style="width: 20px;">
-          <input
-            type="checkbox"
-            id="ibup_auto_imageboss_cdn"
-            name="ibup_auto_imageboss_cdn"
-            value="yes"
-            <?php echo get_option('ibup_auto_imageboss_cdn') ? 'checked' : '' ?>
-          />
-        </td>
-        <td><label for="ibup_auto_imageboss_cdn">Automatically use ImageBoss' CDN for all my images.</label></td>
-      </tr>
-    </table>
-    <br />
-
+      <textarea
+        id="ibup_imageboss_hosts"
+        name="ibup_imageboss_hosts"
+        rows="4" cols="80"
+      ><?php echo get_option('ibup_imageboss_hosts') ?></textarea> <br /> <br />
     <input type="submit" class="button-primary" value="Save Changes" />
   </form>
 
