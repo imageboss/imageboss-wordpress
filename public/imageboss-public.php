@@ -7,6 +7,7 @@ add_filter('do_rocket_lazyload', '__return_false');
 add_filter('lazyload_is_enabled', '__return_false');
 
 // Disable srcset from wp
+// While the library does not fully support srcset
 add_filter('wp_calculate_image_srcset', '__return_false');
 
 add_action('wp_head', 'ibup_buffer_start');

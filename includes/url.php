@@ -44,6 +44,12 @@ function ibup_process_image_fragment($the_content) {
   $srcset           = $img['srcset'];
 
   $img['imageboss-src'] = $src;
+
+  // disable DPR while the library does not fully support srcset
+  if (!$img['imageboss-dpr']) {
+    $img['imageboss-dpr'] = "false";
+  }
+
   $img['src'] = $transparent_src;
 
   if ($srcset) {

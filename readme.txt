@@ -3,7 +3,7 @@ Contributors: igorescobar
 Tags: cdn, webp, compression, smart cropping, watermark, images
 Requires at least: 3.0
 Tested up to: 5.3.0
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
