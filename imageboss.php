@@ -2,7 +2,7 @@
 /*
 Plugin Name: ImageBoss
 Description: Content aware image resizing, cropping, compression, cache and CDN. All web development best practices, hassle free in one simple and powerful API.
-Version: 2.0.1
+Version: 2.0.3
 Author: ImageBoss
 Author URI: https://imageboss.me
 License: MIT

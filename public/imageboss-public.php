@@ -1,5 +1,14 @@
 <?php
 
+// Disable lazy loading for wp rocket
+add_filter('do_rocket_lazyload', '__return_false');
+
+// Disable lazy loading for jetpack
+add_filter('lazyload_is_enabled', '__return_false');
+
+// Disable srcset from wp
+add_filter('wp_calculate_image_srcset', '__return_false');
+
 add_action('wp_head', 'ibup_buffer_start');
 function ibup_buffer_start() {
   if (!wp_doing_ajax()) {

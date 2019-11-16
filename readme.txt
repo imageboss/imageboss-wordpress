@@ -1,9 +1,9 @@
 === ImageBoss WordPress Plugin ===
 Contributors: igorescobar
-Tags: cdn, compression, smart cropping, watermarking, images
+Tags: cdn, webp, compression, smart cropping, watermark, images
 Requires at least: 3.0
 Tested up to: 5.3.0
-Stable tag: 2.0.1
+Stable tag: 2.0.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
