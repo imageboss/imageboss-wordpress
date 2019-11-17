@@ -32,16 +32,18 @@ function ibup_get_biggest_size($srcset) {
 }
 
 function ibup_process_image_fragment($the_content) {
-  $img = simplexml_load_string($the_content);
-  $src = clone($img['src']);
-  $hosts = join('|', ibup_get_authorised_hosts());
+  $img              = simplexml_load_string($the_content);
+  $src              = clone($img['src']);
+  $srcset           = $img['srcset'];
+  $transparent_src  = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+
+  $hosts = join('|', array_map(function($host) {
+    return preg_quote($host, '/');
+  }, ibup_get_authorised_hosts()));
 
   if (!preg_match("/$hosts/", $src)) {
     return $the_content;
   }
-
-  $transparent_src  = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
-  $srcset           = $img['srcset'];
 
   $img['data-imageboss-src'] = $src;
 
@@ -54,6 +56,10 @@ function ibup_process_image_fragment($the_content) {
 
   if ($srcset) {
     $img['data-imageboss-src'] = ibup_get_biggest_size($srcset);
+    $img['data-imageboss-srcset'] = clone($srcset);
+    $img['data-imageboss-sizes'] = clone($img['sizes']);
+    unset($img['srcset']);
+    unset($img['sizes']);
   }
 
   return str_replace('<?xml version="1.0"?>', '', $img->asXML());
