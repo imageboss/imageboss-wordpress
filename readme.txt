@@ -1,4 +1,4 @@
-=== ImageBoss WordPress Plugin ===
+=== ImageBoss - Images Up To 60% Smaller & CDN ===
 Contributors: igorescobar
 Tags: cdn, webp, image compression
 Requires at least: 4.0
