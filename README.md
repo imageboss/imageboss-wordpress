@@ -12,6 +12,7 @@ Official Wordpress plugin for ImageBoss.
 * Retina Displays Support.
 * Theme Images Supported.
 * Post Images Supported.
+* Background Images Supported.
 * Helper for inserting images into your posts using ImageBoss Functionalities.
 
 This plugin allows you to automatically serve all your image files via ImageBoss service which will give you:

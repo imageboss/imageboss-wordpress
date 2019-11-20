@@ -1,66 +1,48 @@
 <?php
 
 function ibup_get_authorised_hosts() {
-  return array_filter(
-    array_map(
-        'trim',
-            explode(',',
-            get_option('ibup_imageboss_hosts'))
-        )
-    );
+  return array_filter(array_map('trim', explode(',', get_option('ibup_imageboss_hosts'))));
 }
+
 function ibup_apply_imageboss_urls($the_content) {
-  return preg_replace_callback('/<img[\s\r\n]+.*?>/is', function($matches) {
-    return ibup_process_image_fragment($matches[0]);
-  }, $the_content);
-}
-
-function ibup_get_biggest_size($srcset) {
-  $sources = array_map('trim', explode(',', $srcset));
-  $size = 0;
-  foreach ($sources as $source) {
-      $attr = array_map('trim', explode(' ', $source));
-      if ($attr[1]) {
-          $attr[1] = intval(substr($attr[1], 0, strlen($attr[1]) - 1));
-          if ($attr[1] > $size) {
-              $retSrc = $attr[0];
-              $size = $attr[1];
-          }
-      }
-  }
-  return $retSrc;
-}
-
-function ibup_process_image_fragment($the_content) {
-  $img              = simplexml_load_string($the_content);
-  $src              = clone($img['src']);
-  $srcset           = $img['srcset'];
-  $transparent_src  = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
-
   $hosts = join('|', array_map(function($host) {
     return preg_quote($host, '/');
   }, ibup_get_authorised_hosts()));
 
+  $the_content = preg_replace_callback('/<img[\s\r\n]+.*?>/is', function($matches) use ($hosts) {
+    return ibup_process_image_fragment($matches[0], $hosts);
+  }, $the_content);
+
+  $the_content = preg_replace_callback("/<[^>]*?\sstyle=['\"][^>]*?background(-image)?:.*?url\(\s*.*?\s*\);?.*?['\"].*?>/ismS", function($matches)  use ($hosts) {
+    return ibup_process_background_fragment($matches[0], $hosts);
+  }, $the_content);
+
+  return $the_content;
+}
+
+function ibup_process_background_fragment($fragment, $hosts) {
+  if (!preg_match("/$hosts/", $fragment)) {
+    return $fragment;
+  }
+
+  $fragment = preg_replace("/(\sstyle=['\"][^>]*?)(background-image:.*?url\((\s*.*?\s*)\));?(.*?['\"])/xis", '$1$4 data-imageboss-bg-src=$3', $fragment);
+  $fragment = preg_replace("/(\sstyle=['\"][^>]*?background:.*?)(url\((\s*.*?\s*)\));?(.*?['\"])/xis", '$1$4 data-imageboss-bg-src=$3', $fragment);
+
+  return $fragment;
+}
+
+function ibup_process_image_fragment($img, $hosts) {
+  preg_match('/\bsrc[\s\r\n]*=[\s\r\n]*[\'"]?(.*?)[\'">\s\r\n]/xis', $img, $matches);
+  $src = $matches[1];
+
   if (!preg_match("/$hosts/", $src)) {
-    return $the_content;
+    return $img;
   }
 
-  $img['data-imageboss-src'] = $src;
+  $transparent_src  = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+  $img = preg_replace('/<img(.*?)src=(["\']?).*?[\'">\s\r\n]/is', '<img$1src="' . $transparent_src . '" data-imageboss-src="' . $src . '"', $img);
+  $img = preg_replace('/srcset=/is', 'data-imageboss-srcset=', $img);
+  $img = preg_replace('/sizes=/is', 'data-imageboss-sizes=', $img);
 
-  // disable DPR while the library does not fully support srcset
-  if (!$img['data-imageboss-dpr']) {
-    $img['data-imageboss-dpr'] = "false";
-  }
-
-  $img['src'] = $transparent_src;
-
-  if ($srcset) {
-    $img['data-imageboss-src'] = ibup_get_biggest_size($srcset);
-    $img['data-imageboss-srcset'] = clone($srcset);
-    $img['data-imageboss-sizes'] = clone($img['sizes']);
-    unset($img['srcset']);
-    unset($img['sizes']);
-  }
-
-  return str_replace('<?xml version="1.0"?>', '', $img->asXML());
+  return $img;
 }

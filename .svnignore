@@ -10,3 +10,5 @@ local.ini
 uploads/*
 *.ini
 .gitignore
+maria_data/*
+*.Dockerfile
