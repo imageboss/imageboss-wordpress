@@ -12,3 +12,4 @@ uploads/*
 .gitignore
 maria_data/*
 *.Dockerfile
+dev/

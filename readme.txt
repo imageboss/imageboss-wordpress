@@ -4,7 +4,7 @@ Tags: cdn, webp, image compression
 Requires at least: 4.0
 Requires PHP: 5.3.0
 Tested up to: 5.3.0
-Stable tag: 2.0.9
+Stable tag: 2.0.10
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -33,8 +33,6 @@ Content aware image resizing, cropping, compression, cache and CDN. All web deve
 * Watermarking.
 
 Your WordPress Themes are now even more powerful and flexible.
-
-Caution: This plugin may cause some server side cache services to return non-cached content to all users.
 
 == Installation ==
 
