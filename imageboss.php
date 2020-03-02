@@ -2,7 +2,7 @@
 /*
 Plugin Name: ImageBoss
 Description: Images Up To 60% Smaller & CDN.
-Version: 2.0.12
+Version: 2.1.0
 Author: ImageBoss
 Author URI: https://imageboss.me
 License: MIT
