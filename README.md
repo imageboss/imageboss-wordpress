@@ -36,7 +36,7 @@ Installing "ImageBoss WordPress Plugin" can be done either by searching for "Ima
 
 ## Setting Up
 
-### Authorise your traffic
+### Connect to your Images
 When you install go to the settings menu: Dashboard -> ImageBoss -> Settings. Make sure you follow all the steps.
 
 [![Settings](./assets/screenshot-1.png)](https://imageboss.me)

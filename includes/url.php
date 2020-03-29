@@ -1,7 +1,16 @@
 <?php
 
+function ibup_is_activated() {
+  return get_option('ibup_imageboss_active') == "true";
+}
+
+
 function ibup_get_authorised_hosts() {
   return array_filter(array_map('trim', explode(',', get_option('ibup_imageboss_hosts'))));
+}
+
+function ibup_get_source() {
+  return trim(get_option('ibup_imageboss_source'));
 }
 
 function ibup_apply_imageboss_urls($the_content) {

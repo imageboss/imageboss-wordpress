@@ -2,7 +2,7 @@
 
 add_action('wp_head', 'ibup_buffer_start');
 function ibup_buffer_start() {
-  if (!wp_doing_ajax()) {
+  if (!wp_doing_ajax() && ibup_is_activated()) {
     ob_start("ibup_buffer_callback");
   }
 }

@@ -10,17 +10,35 @@ function image_boss_settings() {
       <div class='updated'><p>You have successfully saved the settings.</p></div>
     <?php } ?>
 
-    <h3>Step 1</h3>
+    <h3>Step 1: Account</h3>
     <p>Create your <a href="https://imageboss.me/" target="_blank">ImageBoss Account</a>.</p>
 
-    <h3>Step 2</h3>
+    <h3>Step 2: Image Source</h3>
     <p>
-      In order to identify your traffic you need to add the host of the images you want to optimize on <a target='_blank' href='https://imageboss.me/dashboard'>ImageBoss Dashboard</a>.
+      Connect ImageBoss to your images on <a target='_blank' href='https://imageboss.me/dashboard'>ImageBoss Dashboard</a> by adding your image source.
     </p>
-
-    <h3>Step 3</h3>
-    <p>Comma separated list of your image hosts you want to connect with this plugin</p>
     <?php settings_fields('imageboss-settings-group'); ?>
+
+    <h3>Step 3: Source Name</h3>
+    <p>This is the name you gave to your Image Source on Step 2.</p>
+    <input
+        id="ibup_imageboss_source"
+        name="ibup_imageboss_source"
+        placeholder="mywordpress-images"
+        style="width: 300px"
+        value="<?php echo get_option('ibup_imageboss_source') ?>"
+    /> <br /> <br />
+    <h3>Activate</h3>
+    <input
+      type="checkbox"
+      id="ibup_imageboss_active"
+      name="ibup_imageboss_active"
+
+      value="true"
+      <?php echo get_option('ibup_imageboss_active') ? 'checked' : '' ?>
+    /> <label for="ibup_imageboss_active">If you have all set, check this box to activate ImageBoss on your images.</label>
+    <h3>Advanced Configurations</h3>
+    <p>By default ImageBoss will wrap all your images. If you don't want this to happen you can add bellow the hosts you want ImageBoss to intercept:</p>
       <textarea
         id="ibup_imageboss_hosts"
         name="ibup_imageboss_hosts"
