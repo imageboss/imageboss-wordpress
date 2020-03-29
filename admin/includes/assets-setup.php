@@ -10,7 +10,7 @@ function ibup_assets_js() {
 
         echo '
     <script type="text/javascript">window.ImageBoss = {matchHosts: [' . $hosts . '], source: "'. ibup_get_source() .'"};</script>
-    <script src="//cdn.jsdelivr.net/gh/imageboss/imageboss-web@4.0.5/dist/imageboss.min.js" type="text/javascript"></script>
+    <script src="//cdn.jsdelivr.net/gh/imageboss/imageboss-web@4.0.6/dist/imageboss.min.js" type="text/javascript"></script>
         ';
     }
 }
