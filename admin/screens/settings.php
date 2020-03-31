@@ -38,7 +38,7 @@ function image_boss_settings() {
       <?php echo get_option('ibup_imageboss_active') ? 'checked' : '' ?>
     /> <label for="ibup_imageboss_active">If you have all set, check this box to activate ImageBoss on your images.</label>
     <h3>Advanced Configurations</h3>
-    <p>By default ImageBoss will wrap all your images. If you don't want this to happen you can add bellow the hosts you want ImageBoss to intercept:</p>
+    <p>By default ImageBoss will wrap all your images. If you don't want this to happen you can add bellow the hosts (and/or path) you want ImageBoss to intercept:</p>
       <textarea
         id="ibup_imageboss_hosts"
         name="ibup_imageboss_hosts"
