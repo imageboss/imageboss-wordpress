@@ -23,7 +23,7 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
 
-  wordpress-php7:
+  wordpress:
     depends_on:
       - db
     image: wordpress:latest
@@ -45,19 +45,19 @@ services:
         define('WP_POST_MAX_SIZE','64M');
         define('WP_UPLOAD_MAX_SIZE','64M');
 
-  wordpress-php5-4:
-    userns_mode: "host"
-    build:
-      context: .
-      dockerfile: php5-4.Dockerfile
-    depends_on:
-      - maria
-    ports:
-      - 8000:80
-    volumes:
-      # - ./:/var/www/html/wp-content/plugins/imageboss
-      - ./dev/:/var/www/html
-      # - ./wp-content:/var/www/html/wp-content
+  # wordpress-php5-4:
+  #   userns_mode: "host"
+  #   build:
+  #     context: .
+  #     dockerfile: php5-4.Dockerfile
+  #   depends_on:
+  #     - maria
+  #   ports:
+  #     - 8000:80
+  #   volumes:
+  #     # - ./:/var/www/html/wp-content/plugins/imageboss
+  #     - ./dev/:/var/www/html
+  #     # - ./wp-content:/var/www/html/wp-content
 
 volumes:
   db_data:
