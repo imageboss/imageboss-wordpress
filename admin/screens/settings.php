@@ -26,7 +26,7 @@ function image_boss_settings() {
         name="ibup_imageboss_source"
         placeholder="mywordpress-images"
         style="width: 300px"
-        value="<?php echo get_option('ibup_imageboss_source') ?>"
+        value="<?php echo filter_var(get_option('ibup_imageboss_source'), FILTER_SANITIZE_STRING) ?>"
     /> <br /> <br />
     <h3>Activate</h3>
     <input
@@ -43,7 +43,7 @@ function image_boss_settings() {
         id="ibup_imageboss_hosts"
         name="ibup_imageboss_hosts"
         rows="4" cols="80"
-      ><?php echo get_option('ibup_imageboss_hosts') ?></textarea> <br /> <br />
+      ><?php echo filter_var(get_option('ibup_imageboss_hosts'), FILTER_SANITIZE_STRING) ?></textarea> <br /> <br />
     <input type="submit" class="button-primary" value="Save Changes" />
   </form>
 
