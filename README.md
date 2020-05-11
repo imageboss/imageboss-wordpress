@@ -1,4 +1,4 @@
-[![ImageBoss logo](https://img.imageboss.me/width/180/https://imageboss.me/emails/logo-2@2x.png)](https://imageboss.me)
+[![ImageBoss logo](https://img.imageboss.me/boss-images/width/180/emails/logo-2@2x.png)](https://imageboss.me)
 
 # ImageBoss Plugin for Wordpress
 
