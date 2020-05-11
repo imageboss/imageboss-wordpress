@@ -6,7 +6,8 @@ function ibup_is_activated() {
 
 
 function ibup_get_authorised_hosts() {
-  return array_filter(array_map('trim', explode(',', get_option('ibup_imageboss_hosts'))));
+  $hosts = htmlspecialchars(get_option('ibup_imageboss_hosts'), ENT_QUOTES, 'UTF-8');
+  return array_filter(array_map('trim', explode(',', $hosts)));
 }
 
 function ibup_get_source() {

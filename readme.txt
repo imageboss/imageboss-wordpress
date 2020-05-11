@@ -4,7 +4,7 @@ Tags: cdn, webp, image compression
 Requires at least: 4.0
 Requires PHP: 5.3.0
 Tested up to: 5.3.0
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
