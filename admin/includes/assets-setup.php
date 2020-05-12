@@ -1,7 +1,9 @@
 <?php
 
-add_action('wp_footer', 'ibup_assets_js');
-function ibup_assets_js() {
+add_action('wp_footer', 'ibup_assets');
+add_action('wp_enqueue_scripts', 'ibup_assets_tag');
+
+function ibup_assets_tag() {
     if (ibup_is_activated()) {
         // increase compatibility with older PHP versions
         $hosts = join(',', array_map(function($host) {
@@ -10,9 +12,12 @@ function ibup_assets_js() {
 
         $source = htmlspecialchars(ibup_get_source(), ENT_QUOTES, 'UTF-8');
 
-        echo '
-    <script type="text/javascript">window.ImageBoss = {matchHosts: [' . $hosts . '], source: "'. $source .'"};</script>
-    <script src="//cdn.jsdelivr.net/gh/imageboss/imageboss-web@4.1.1/dist/imageboss.min.js" type="text/javascript"></script>
-        ';
+        echo '<script type="text/javascript">window.ImageBoss = {matchHosts: [' . $hosts . '], source: "'. $source .'"};</script>';
+    }
+}
+
+function ibup_assets() {
+    if (ibup_is_activated()) {
+        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@4.1.1/dist/imageboss.min.js', array(), false, true );
     }
 }

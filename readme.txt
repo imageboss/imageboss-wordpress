@@ -4,7 +4,7 @@ Tags: cdn, webp, image compression
 Requires at least: 4.0
 Requires PHP: 5.3.0
 Tested up to: 5.3.0
-Stable tag: 3.0.6
+Stable tag: 3.0.8
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -44,3 +44,7 @@ Installing "ImageBoss WordPress Plugin" can be done either by searching for "Ima
 1. Go to the Plugin Settings and follow the instructions.
 1. Make sure you clean your cache if you have any caching-related plugins installed.
 
+== Usage of 3rd Party Service ==
+This plugin relies on [ImageBoss Web](https://github.com/imageboss/imageboss-web). Which is a web implementation of [ImageBoss](https://imageboss.me/).
+To use this plugin you need to have a [ImageBoss](https://imageboss.me/) account and therefore agree with the [Terms & Conditions](https://imageboss.me/legal/terms).
+This plugin do not send any information to any 3rd party service.
