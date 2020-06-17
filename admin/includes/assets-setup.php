@@ -18,6 +18,6 @@ function ibup_assets_tag() {
 
 function ibup_assets() {
     if (ibup_is_activated()) {
-        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@4.1.3/dist/imageboss.min.js', array(), false, true );
+        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@4.1.5/dist/imageboss.min.js', array(), false, true );
     }
 }
