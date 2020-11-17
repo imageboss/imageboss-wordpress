@@ -4,6 +4,9 @@ function ibup_is_activated() {
   return get_option('ibup_imageboss_active') == "true";
 }
 
+function ibup_is_lazyload_activated() {
+  return get_option('ibup_imageboss_lazyload_active') == "true";
+}
 
 function ibup_get_authorised_hosts() {
   $hosts = htmlspecialchars(get_option('ibup_imageboss_hosts'), ENT_QUOTES, 'UTF-8');
@@ -50,9 +53,8 @@ function ibup_process_image_fragment($img, $hosts) {
   }
 
   $transparent_src  = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
-  $img = preg_replace('/<img(.*?)src=(["\']?).*?[\'">\s\r\n]/is', '<img$1src="' . $transparent_src . '" data-imageboss-src="' . $src . '"', $img);
-  $img = preg_replace('/srcset=/is', 'data-imageboss-srcset=', $img);
-  $img = preg_replace('/sizes=/is', 'data-imageboss-sizes=', $img);
+  $lazyload_attr = ibup_is_lazyload_activated() ? ' data-imageboss-class="lazyload"': '';
+  $img = preg_replace('/<img(.*?)src=(["\']?).*?[\'">\s\r\n]/is', '<img$1src="' . $transparent_src . '" data-imageboss-src="' . $src . '"'.$lazyload_attr.'', $img);
 
   return $img;
 }

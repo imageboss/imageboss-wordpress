@@ -11,13 +11,27 @@ function ibup_assets_tag() {
         }, ibup_get_authorised_hosts()));
 
         $source = htmlspecialchars(ibup_get_source(), ENT_QUOTES, 'UTF-8');
-
-        echo '<script type="text/javascript">window.ImageBoss = {matchHosts: [' . $hosts . '], source: "'. $source .'"};</script>';
+?>
+<script type="text/javascript">
+window.ImageBoss = {
+    matchHosts: [<?= $hosts ?>],
+    source: "<?= $source ?>",
+<?php if (ibup_is_lazyload_activated()) { ?>
+    srcPropKey: "data-src",
+    srcsetPropKey: "data-srcset",
+    lowsrcPropKey: "data-lowsrc"
+<?php } ?>
+};
+</script>
+<?php
     }
 }
 
 function ibup_assets() {
     if (ibup_is_activated()) {
-        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@4.1.5/dist/imageboss.min.js', array(), false, true );
+        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@5.0.6/dist/imageboss.min.js', array(), false, true );
+        if (ibup_is_lazyload_activated()) {
+            wp_enqueue_script( 'lazysizes', plugin_dir_url(__FILE__) . '../../public/js/lazysizes.min.js', array(), false, true );
+        }
     }
 }

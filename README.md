@@ -9,6 +9,7 @@ Official Wordpress plugin for ImageBoss.
 * WooCommerce Compatible.
 * Compression, CDN and progressive scans to all your images AUTOMATICALLY.
 * Free Bandwidth.
+* Lazy Loading.
 * Retina Displays Support.
 * Theme Images Supported.
 * Post Images Supported.
