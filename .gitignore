@@ -4,3 +4,4 @@ uploads/*
 wp-content/*
 *.zip
 maria_data/*
+wordpress-data/

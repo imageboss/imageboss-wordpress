@@ -1,24 +1,13 @@
 version: '3.3'
 
 services:
-  maria:
-    image: mariadb
-    volumes:
-      - ./maria_data/:/var/lib/mysql
-    ports:
-     - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: wordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
   db:
     image: mysql:5.7
     volumes:
       - db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
@@ -31,9 +20,9 @@ services:
       - "8000:80"
     restart: always
     volumes:
-      - ./:/var/www/html/wp-content/plugins/imageboss
-      - ./wp-content:/var/www/html/wp-content
-      - ./local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./wordpress-data:/var/www/html
+      - ./wordpress-data/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - .:/var/www/html/wp-content/plugins/imageboss
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
@@ -44,21 +33,5 @@ services:
         define('WP_UPLOAD_MAX_FILESIZE', '64M');
         define('WP_POST_MAX_SIZE','64M');
         define('WP_UPLOAD_MAX_SIZE','64M');
-
-  # wordpress-php5-4:
-  #   userns_mode: "host"
-  #   build:
-  #     context: .
-  #     dockerfile: php5-4.Dockerfile
-  #   depends_on:
-  #     - maria
-  #   ports:
-  #     - 8000:80
-  #   volumes:
-  #     # - ./:/var/www/html/wp-content/plugins/imageboss
-  #     - ./dev/:/var/www/html
-  #     # - ./wp-content:/var/www/html/wp-content
-
 volumes:
   db_data:
-  maria_data:
