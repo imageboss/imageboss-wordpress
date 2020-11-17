@@ -27,17 +27,28 @@ function image_boss_settings() {
         placeholder="mywordpress-images"
         style="width: 300px"
         value="<?php echo filter_var(get_option('ibup_imageboss_source'), FILTER_SANITIZE_STRING) ?>"
-    /> <br /> <br />
+    /> <br />
     <h3>Activate</h3>
     <input
       type="checkbox"
       id="ibup_imageboss_active"
       name="ibup_imageboss_active"
-
       value="true"
       <?php echo get_option('ibup_imageboss_active') ? 'checked' : '' ?>
     /> <label for="ibup_imageboss_active">If you have all set, check this box to activate ImageBoss on your images.</label>
+    <br /><br />
     <h3>Advanced Configurations</h3>
+    <h3>Lazyload Images</h3>
+    <input
+      type="checkbox"
+      id="ibup_imageboss_lazyload_active"
+      name="ibup_imageboss_lazyload_active"
+
+      value="true"
+      <?php echo get_option('ibup_imageboss_lazyload_active') ? 'checked' : '' ?>
+    /> <label for="ibup_imageboss_lazyload_active">If you want your images to be lazyloaded.</label>
+    <br /><br />
+    <h3>Whitelist Images</h3>
     <p>By default ImageBoss will wrap all your images. If you don't want this to happen you can add bellow the hosts (and/or path) you want ImageBoss to intercept:</p>
       <textarea
         id="ibup_imageboss_hosts"

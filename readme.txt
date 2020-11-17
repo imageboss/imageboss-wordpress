@@ -1,10 +1,10 @@
 === ImageBoss - Images Up To 60% Smaller & CDN ===
 Contributors: igorescobar
-Tags: cdn, webp, image compression
+Tags: cdn, webp, image compression, lazy load
 Requires at least: 4.0
 Requires PHP: 5.3.0
-Tested up to: 5.3.0
-Stable tag: 3.0.11
+Tested up to: 5.5.3
+Stable tag: 3.0.9
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -17,6 +17,7 @@ Boost page load times by delivering up to 60% smaller images, CDN and responsive
 * Compression, CDN and Progressive Scans to all your images AUTOMATICALLY.
 * Free Bandwidth.
 * Retina Displays Support.
+* Lazy loading.
 
 = API Features =
 
@@ -24,6 +25,7 @@ Content aware image resizing, cropping, compression, cache and CDN. All web deve
 
 * Content Aware Image Cropping.
 * Up to 60% smaller images.
+* Lazy loading.
 * WebP Detection.
 * Face Detection.
 * Animated GIFs.
