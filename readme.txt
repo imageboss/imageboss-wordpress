@@ -3,8 +3,8 @@ Contributors: igorescobar
 Tags: cdn, webp, image compression, lazy load
 Requires at least: 4.0
 Requires PHP: 5.3.0
-Tested up to: 5.5.3
-Stable tag: 3.0.9
+Tested up to: 6.3
+Stable tag: 5.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 

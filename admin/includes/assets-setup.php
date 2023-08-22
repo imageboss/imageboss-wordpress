@@ -18,6 +18,7 @@ window.ImageBoss = {
     source: "<?= $source ?>",
 <?php if (ibup_is_lazyload_activated()) { ?>
     srcPropKey: "data-src",
+    format: 'auto',
     srcsetPropKey: "data-srcset",
     lowsrcPropKey: "data-lowsrc"
 <?php } ?>
@@ -29,7 +30,7 @@ window.ImageBoss = {
 
 function ibup_assets() {
     if (ibup_is_activated()) {
-        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@5.0.6/dist/imageboss.min.js', array(), false, true );
+        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@5.1.1/dist/imageboss.min.js', array(), false, true );
         if (ibup_is_lazyload_activated()) {
             wp_enqueue_script( 'lazysizes', plugin_dir_url(__FILE__) . '../../public/js/lazysizes.min.js', array(), false, true );
         }

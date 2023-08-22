@@ -2,7 +2,8 @@ version: '3.3'
 
 services:
   db:
-    image: mysql:5.7
+    # platform: arm64/v8
+    image: arm64v8/mysql:8
     volumes:
       - db_data:/var/lib/mysql
     restart: always
@@ -13,6 +14,7 @@ services:
       MYSQL_PASSWORD: wordpress
 
   wordpress:
+    platform: linux/arm64/v8
     depends_on:
       - db
     image: wordpress:latest
