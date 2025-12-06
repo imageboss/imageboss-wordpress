@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 add_filter('plugin_action_links', 'ibup_plugin_admin_action_links', 10, 2);
 

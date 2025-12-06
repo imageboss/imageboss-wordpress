@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 add_action('admin_menu', 'ibup_register_menu_page');
 function ibup_register_menu_page() {

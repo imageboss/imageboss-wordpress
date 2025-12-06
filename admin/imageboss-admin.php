@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 require plugin_dir_path(__FILE__) . '/includes/plugin-activation.php';
 require plugin_dir_path(__FILE__) . '/includes/plugin-actionlinks.php';

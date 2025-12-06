@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 function ibup_is_activated() {
   return get_option('ibup_imageboss_active') == "true";

@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 function image_boss_settings() {
 ?>
 
@@ -26,7 +28,7 @@ function image_boss_settings() {
         name="ibup_imageboss_source"
         placeholder="mywordpress-images"
         style="width: 300px"
-        value="<?php echo filter_var(get_option('ibup_imageboss_source'), FILTER_SANITIZE_STRING) ?>"
+        value="<?php echo esc_attr( get_option('ibup_imageboss_source') ); ?>"
     /> <br />
     <h3>Activate</h3>
     <input
@@ -34,7 +36,7 @@ function image_boss_settings() {
       id="ibup_imageboss_active"
       name="ibup_imageboss_active"
       value="true"
-      <?php echo get_option('ibup_imageboss_active') ? 'checked' : '' ?>
+      <?php checked( get_option('ibup_imageboss_active'), 'true' ); ?>
     /> <label for="ibup_imageboss_active">If you have all set, check this box to activate ImageBoss on your images.</label>
     <br /><br />
     <h3>Advanced Configurations</h3>
@@ -45,7 +47,7 @@ function image_boss_settings() {
       name="ibup_imageboss_lazyload_active"
 
       value="true"
-      <?php echo get_option('ibup_imageboss_lazyload_active') ? 'checked' : '' ?>
+      <?php checked( get_option('ibup_imageboss_lazyload_active'), 'true' ); ?>
     /> <label for="ibup_imageboss_lazyload_active">If you want your images to be lazyloaded.</label>
     <br /><br />
     <h3>Whitelist Images</h3>
@@ -54,7 +56,7 @@ function image_boss_settings() {
         id="ibup_imageboss_hosts"
         name="ibup_imageboss_hosts"
         rows="4" cols="80"
-      ><?php echo filter_var(get_option('ibup_imageboss_hosts'), FILTER_SANITIZE_STRING) ?></textarea> <br /> <br />
+      ><?php echo esc_textarea( get_option('ibup_imageboss_hosts') ); ?></textarea> <br /> <br />
     <input type="submit" class="button-primary" value="Save Changes" />
   </form>
 

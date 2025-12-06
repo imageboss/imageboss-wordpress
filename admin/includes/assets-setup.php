@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 add_action('wp_footer', 'ibup_assets');
 add_action('wp_enqueue_scripts', 'ibup_assets_tag');
@@ -14,8 +15,8 @@ function ibup_assets_tag() {
 ?>
 <script type="text/javascript">
 window.ImageBoss = {
-    matchHosts: [<?= $hosts ?>],
-    source: "<?= $source ?>",
+    matchHosts: [<?php echo $hosts; ?>],
+    source: "<?php echo esc_js( $source ); ?>",
 <?php if (ibup_is_lazyload_activated()) { ?>
     srcPropKey: "data-src",
     format: 'auto',
@@ -30,9 +31,9 @@ window.ImageBoss = {
 
 function ibup_assets() {
     if (ibup_is_activated()) {
-        wp_enqueue_script( 'imageboss-web', '//cdn.jsdelivr.net/gh/imageboss/imageboss-web@5.1.2/dist/imageboss.min.js', array(), false, true );
+        wp_enqueue_script( 'imageboss-web', plugin_dir_url(__FILE__) . '../../public/js/imageboss-web-5.1.4.min.js', array(), '5.1.4', true );
         if (ibup_is_lazyload_activated()) {
-            wp_enqueue_script( 'lazysizes', plugin_dir_url(__FILE__) . '../../public/js/lazysizes.min.js', array(), false, true );
+            wp_enqueue_script( 'lazysizes', plugin_dir_url(__FILE__) . '../../public/js/lazysizes.min.js', array(), '5.3.2', true );
         }
     }
 }

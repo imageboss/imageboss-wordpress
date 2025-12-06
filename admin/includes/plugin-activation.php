@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 register_activation_hook(IBUP_BASENAME, 'ibup_plugin_activate');
 function ibup_plugin_activate() {
