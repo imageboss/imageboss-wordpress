@@ -2,7 +2,7 @@
 /*
 Plugin Name: ImageBoss
 Description: Image Optimization & CDN - Optimize your images with compression and CDN delivery.
-Version: 5.0.2
+Version: 5.0.3
 Author: ImageBoss
 Author URI: https://imageboss.me
 License: MIT

@@ -1,0 +1,36 @@
+# Development files
+.git
+.gitignore
+.gitattributes
+.svnignore
+.github
+
+# Docker and development environment
+*.Dockerfile
+docker-compose.yml
+*.yml
+*.yaml
+
+# Build and deploy scripts
+deploy.sh
+*.sh
+
+# Development data
+maria_data/
+wordpress-data/
+uploads/
+dev/
+
+# IDE and OS files
+.DS_Store
+Thumbs.db
+*.ini
+local.ini
+
+# Documentation (README.md excluded, readme.txt is required)
+README.md
+
+# Temporary files
+*.zip
+*.log
+

@@ -2,17 +2,17 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 add_action('wp_head', 'ibup_buffer_start');
+add_action('wp_footer', 'ibup_buffer_end', PHP_INT_MAX);
+
 function ibup_buffer_start() {
   if (!wp_doing_ajax() && ibup_is_activated()) {
-    ob_start("ibup_buffer_callback");
+    ob_start();
   }
 }
 
-// wraps the entire blog html output
-function ibup_buffer_callback($buffer, $phase) {
-  if ($phase & PHP_OUTPUT_HANDLER_FINAL || $phase & PHP_OUTPUT_HANDLER_END) {
-    return ibup_apply_imageboss_urls($buffer);
+function ibup_buffer_end() {
+  if (!wp_doing_ajax() && ibup_is_activated() && ob_get_level() > 0) {
+    $buffer = ob_get_clean();
+    echo ibup_apply_imageboss_urls($buffer);
   }
-
-  return $buffer;
 }

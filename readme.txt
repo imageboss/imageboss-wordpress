@@ -3,8 +3,8 @@ Contributors: igorescobar
 Tags: cdn, webp, image compression, lazy load
 Requires at least: 4.0
 Requires PHP: 5.3.0
-Tested up to: 6.8
-Stable tag: 5.0.2
+Tested up to: 6.9
+Stable tag: 5.0.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -67,7 +67,21 @@ To use this plugin, you need an [ImageBoss account](https://imageboss.me/). By u
 * Terms of Service: [https://imageboss.me/legal/terms](https://imageboss.me/legal/terms)
 * Privacy Policy: [https://imageboss.me/legal/privacy](https://imageboss.me/legal/privacy)
 
-== Changelog ==
+== Third-Party Libraries ==
+
+This plugin includes the following third-party JavaScript libraries in minified form:
+
+= ImageBoss Web =
+* Version: 5.1.4
+* Source Code: [https://github.com/imageboss/imageboss-web](https://github.com/imageboss/imageboss-web)
+* License: MIT
+* File: public/js/imageboss-web-5.1.4.min.js
+
+= LazySizes =
+* Version: 5.3.2
+* Source Code: [https://github.com/aFarkas/lazysizes](https://github.com/aFarkas/lazysizes)
+* License: MIT
+* File: public/js/lazysizes.min.js
 
 = 5.0.2 =
 * Fixed: Added proper sanitization callbacks for all settings
