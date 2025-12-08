@@ -83,6 +83,14 @@ This plugin includes the following third-party JavaScript libraries in minified 
 * License: MIT
 * File: public/js/lazysizes.min.js
 
+== Changelog ==
+
+= 5.0.3 =
+* Fixed: Properly close output buffer with ob_get_clean() in wp_footer hook
+* Fixed: Added .distignore file to exclude development files from distribution
+* Added: Third-party library source code documentation in readme (imageboss-web, lazysizes)
+* Updated: Tested with WordPress 6.9
+
 = 5.0.2 =
 * Fixed: Added proper sanitization callbacks for all settings
 * Fixed: Replaced PHP short tags with full PHP tags for better compatibility
